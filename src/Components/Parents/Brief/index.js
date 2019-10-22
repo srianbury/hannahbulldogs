@@ -1,3 +1,3 @@
-import ParentsBrief from './brief';
+import ParentsBrief from './brief2';
 
 export default ParentsBrief;

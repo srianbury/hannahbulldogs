@@ -6,8 +6,7 @@ const ShortContainer = ({ title, left, right }) => {
     <div className="mt-2">
       <Container>
         <Row>
-          <Col sm>
-            <h3 className="mt-1 mb-0">{title}</h3>
+          <Col sm className='d-flex flex-wrap align-content-center'>
             {left}
           </Col>
           <Col sm className='d-flex flex-wrap align-content-center'>
@@ -19,4 +18,10 @@ const ShortContainer = ({ title, left, right }) => {
   );
 };
 
+const Title = ({ title }) => (
+  <h3 className="mt-1 mb-0">{title}</h3>
+);
+
+ShortContainer.Title = Title;
 export default ShortContainer;
+export { Title };

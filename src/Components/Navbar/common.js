@@ -32,8 +32,8 @@ const Navigation = ({ navColors, navItems, navBrand, rightSide }) => {
           <NavBrand {...navBrand.brand} {...navBrand.class} />
         )}
       </Nav>
-      <Navbar.Toggle onClick={toggleOnClick} aria-controls="basic-navbar-nav">
-        <span id="my-toggle" className="navbar-toggler-icon"></span>
+      <Navbar.Toggle onClick={toggleOnClick} aria-controls="basic-navbar-nav" id="my-toggle-outer">
+        <span id="my-toggle-icon" className="navbar-toggler-icon"></span>
       </Navbar.Toggle>
       <Navbar.Collapse id="basic-navbar-nav" ref={ref}>
         <Nav className="mr-auto">
@@ -82,7 +82,8 @@ function useOnClickOutside(ref, cb) {
       if (
         !ref.current ||
         ref.current.contains(event.target) ||
-        event.target.id === "my-toggle"
+        event.target.id === "my-toggle-outer" ||
+        event.target.id === "my-toggle-icon"
       ) {
         return;
       }

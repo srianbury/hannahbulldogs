@@ -2,10 +2,14 @@ import React from "react";
 import DescContainer from "../../Home/Short";
 
 const Left = () => (
-  <img 
-    className="img img-fluid" 
-    src='https://www.w3schools.com/w3images/tablesetting2.jpg' 
-    alt='abt'/>
+  <>
+    <DescContainer.Title title={"About"} />
+    <img
+      className="img img-fluid"
+      src="https://www.w3schools.com/w3images/tablesetting2.jpg"
+      alt="abt"
+    />
+  </>
 );
 const Right = () => (
   <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 

@@ -1,6 +1,7 @@
 import React from "react";
 import DescContainer from "../../Home/Short";
 import ProfilePreview from "../../Profile/HomePreview";
+import { useHistory } from 'react-router-dom';
 
 const db = [
   {
@@ -31,8 +32,20 @@ const db = [
 const Left = () => (
   <>
     {db.map(doggy => <ProfilePreview key={doggy.id} {...doggy} />)}
+    <ViewAll />
   </>
 );
+const ViewAll = () => {
+  const history = useHistory();
+  return(
+    <div className='mt-2'>
+      <button
+        onClick={()=>history.push('/parents')} 
+        className='btn btn-sm btn-warning'>See all parents</button>
+    </div>
+  );
+};
+
 const Right = () => (
   <div>
     A diam maecenas sed enim. Sollicitudin tempor id eu nisl. Sapien et ligula

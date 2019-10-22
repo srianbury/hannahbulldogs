@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Card, Row, Col } from "react-bootstrap";
+import trimText from './trimText';
 
 const ProfilePreviewHome = ({ img, info }) => (
-  <Card className="p-2 mt-2">
+  <Card className="p-2 mb-2">
     <Row>
       <Col className='d-flex flex-wrap align-content-center'>
         <img className="img img-fluid" src={img.src} alt={img.alt} />
         <h4 className='mb-1 mt-1'>{info.name}</h4>
       </Col>
       <Col xs={8}>
-        <div className='mb-1'>{info.desc}</div>
+        <div className='mb-1'>{trimText(info.desc, 128)}</div>
         <button className='btn btn-sm btn-secondary'>More</button>
       </Col>
     </Row>
