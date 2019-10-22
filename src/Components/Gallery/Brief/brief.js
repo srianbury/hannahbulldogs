@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Carousel } from "react-bootstrap";
-import { Title } from "../../Home/Short";
+import { Carousel } from "react-bootstrap";
+import DescContainer from "../../Home/Short";
 
 const familyPhotos = [
   {
@@ -46,20 +46,30 @@ const familyPhotos = [
 ];
 
 const GalleryPreview = () => (
-  <Container>
-    <Title title="Puppies!" />
+  <Carousel interval={null} slide={false}>
+    {familyPhotos.map(pup => (
+      <Carousel.Item key={pup.id}>
+        <img className="img img-fluid" src={pup.src} alt={pup.alt} />
+      </Carousel.Item>
+    ))}
+  </Carousel>
+);
+
+const ShortText = () => (
+  <>
+    <DescContainer.Title title="Puppies!" />
     <div className="mb-1">
       We like to keep in touch with our pups and their families, here are some
       pics of the family!
     </div>
-    <Carousel>
-      {familyPhotos.map(pup => (
-        <Carousel.Item key={pup.id}>
-          <img className="img img-fluid" src={pup.src} alt={pup.alt} />
-        </Carousel.Item>
-      ))}
-    </Carousel>
-  </Container>
+  </>
 );
 
-export default GalleryPreview;
+const Brief = () => (
+  <DescContainer 
+    title="About"
+    left={<ShortText />}
+    right={<GalleryPreview />} />
+);
+
+export default Brief;
