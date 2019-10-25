@@ -1,4 +1,6 @@
 import React from 'react';
+import * as Sentry from '@sentry/browser';
+import SentryFeedbackButton from '../SentryErrorForm';
 
 class ErrorBoundary extends React.Component{
   constructor(props){
@@ -9,13 +11,16 @@ class ErrorBoundary extends React.Component{
   }
 
   static getDerivedStateFromError(err){
-    console.log(err);
     return { hasError: true };
   }
 
-  componentDidCatch(err, errInfo){
+  componentDidCatch(error, errorInfo){
     // log to somewhere
-    console.log(err, errInfo);
+    Sentry.withScope((scope) => {
+      scope.setExtras(errorInfo);
+      const eventId = Sentry.captureException(error);
+      this.setState({ eventId });
+    });
   }
 
   // need to remove the error, otherwise when we go home the error is still there
@@ -37,19 +42,23 @@ class ErrorBoundary extends React.Component{
     if(hasError){
       return Fallback 
         ? <Fallback
-            removeErrorAndGoHome={this.removeErrorAndGoHome} /> 
+            removeErrorAndGoHome={this.removeErrorAndGoHome}
+            eventId={this.state.eventId} /> 
         : <DefaultFallback
-            removeErrorAndGoHome={this.removeErrorAndGoHome} />;
+            removeErrorAndGoHome={this.removeErrorAndGoHome}
+            eventId={this.state.eventId} />;
     }
 
     return children;
   }
 }
 
-const DefaultFallback = () => (
+const DefaultFallback = ({ eventId }) => (
   <div>
     <h2>Whoops...</h2>
-    Something went wrong...
+    <div>Something went wrong...</div>
+    <SentryFeedbackButton 
+      eventId={eventId} />
   </div>
 );
 
