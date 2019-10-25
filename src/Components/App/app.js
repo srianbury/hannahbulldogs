@@ -11,6 +11,8 @@ import withErrorBoundary from '../Error/Boundary';
 import Home from '../Home';
 import EntireAppCatcher from '../Error/Entire';
 import NoMatch from '../404';
+import BottomNav from '../BottomNav';
+import './styles.css';
 
 const Parents = () => <div>Parents Page</div>;
 const Puppies = () => <div>Puppies Page</div>;
@@ -33,6 +35,7 @@ const AppBase = () => (
       <Route path='/login' component={Login} />
       <Route component={NoMatch} />
     </Switch>
+    <BottomNav />
   </>
 );
 
