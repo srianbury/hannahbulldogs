@@ -21,7 +21,6 @@ const Navigation = ({ navColors, navItems, navBrand, rightSide }) => {
       onSelect={closeCollapse}
       bg={navColors.bg}
       variant={navColors.variant}
-      sticky={navColors.sticky}
       expand={navColors.expand}
       collapseOnSelect={true}
     >

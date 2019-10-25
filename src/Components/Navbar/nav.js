@@ -7,7 +7,6 @@ import './styles.css';
 const navColors = {
   variant: 'light',
   bg: 'light',
-  sticky: "top",
   expand: "sm"
 };
 const navItems = {
