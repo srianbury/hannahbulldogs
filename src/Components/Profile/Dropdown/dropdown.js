@@ -17,7 +17,7 @@ const ProfileDropdown = () => {
       {showProfileButton(process.env.NODE_ENV, authUser) && (
         <Dropdown navbar>
           <Dropdown.Toggle variant="primary" id="dropdown-basic">
-            {authUser ? authUser.userInfo.username : "Guest"}
+            {authUser ? authUser.user.username : "Guest"}
           </Dropdown.Toggle>
 
           <Dropdown.Menu flip={true}>
