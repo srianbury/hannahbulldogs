@@ -1,9 +1,10 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
+import SentryFeedbackButton from '../SentryErrorForm';
 import "./styles.css";
 
 // The wrapper that goes around the entire app if it crashes
-const EntireAppCatcher = ({ removeErrorAndGoHome }) => {
+const EntireAppCatcher = ({ removeErrorAndGoHome, eventId }) => {
   const history = useHistory();
   function handleClick(){
     removeErrorAndGoHome(()=>{
@@ -28,7 +29,10 @@ const EntireAppCatcher = ({ removeErrorAndGoHome }) => {
           <div className="d-flex justify-content-center">
             <button 
               onClick={handleClick}
-              className="btn btn-sm btn-info">Home</button>
+              className="btn btn-sm btn-success mr-1">Home</button>
+            <SentryFeedbackButton 
+              className='btn btn-sm btn-danger'
+              eventId={eventId} />
           </div>
         </div>
       </div>
