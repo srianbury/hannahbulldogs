@@ -2,6 +2,7 @@ import React from "react";
 import Navigation from "./common";
 import { Form } from 'react-bootstrap';
 import ProfileDropdown from '../Profile/Dropdown';
+import { ROUTES, TITLES } from '../../Constants';
 import './styles.css';
 
 const navColors = {
@@ -14,17 +15,17 @@ const navItems = {
     activeClassName: "text-primary"
   },
   items: [
-    { to: "/", value: "Home" },
-    { to: "/parents", value: "Parents" },
-    { to: "/puppies", value: "Puppies" },
-    { to: "/gallery", value: "Gallery" }
+    { to: ROUTES.HOME, value: TITLES.HOME },
+    { to: ROUTES.PARENTS, value: TITLES.PARENTS },
+    { to: ROUTES.PUPPIES, value: TITLES.PUPPIES },
+    { to: ROUTES.GALLERY, value: TITLES.GALLERY },
   ]
 };
 const navBrand = {
   highlight: false,
   brand: {
-    to: "/",
-    value: "HB"
+    to: ROUTES.HOME,
+    value: TITLES.ABBR,
   },
   class: {
     className: "navbar-brand",
