@@ -13,10 +13,10 @@ import EntireAppCatcher from '../Error/Entire';
 import NoMatch from '../404';
 import BottomNav from '../BottomNav';
 import SignUp from '../SignUp';
+import ParentsPage from '../Parents/Page';
 import { ROUTES } from '../../Constants';
 import './styles.css';
 
-const Parents = () => <div>Parents Page</div>;
 const Puppies = () => <div>Puppies Page</div>;
 const Gallery = () => <div>Gallery Page</div>;
 
@@ -31,7 +31,7 @@ const AppBase = () => (
     <Nav />
     <Switch>
       <Route exact path={ROUTES.HOME} component={Home} />
-      <Route path={ROUTES.PARENTS} component={Parents} />
+      <Route path={ROUTES.PARENTS} component={ParentsPage} />
       <Route path={ROUTES.PUPPIES} component={Puppies} />
       <Route path={ROUTES.GALLERY} component={Gallery} />
       <Route path={ROUTES.LOGIN} component={Login} />
