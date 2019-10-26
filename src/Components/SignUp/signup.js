@@ -131,10 +131,10 @@ async function signUp(username, email, password, confirmPassword, onSuccess, onE
       const { status } = response;
       switch (status) {
         case 422:
-          const result = await response.json();
-          const { error } = result;
-          const formattedErrors = formatErrors(error);
-          onError(new Error(formattedErrors));
+          handle422(response, onError);
+          break;
+        case 409:
+          handle409(response, onError);
           break;
         default:
           throw new Error("Something went wrong...");
@@ -143,6 +143,21 @@ async function signUp(username, email, password, confirmPassword, onSuccess, onE
   } catch {
     onError(new Error("Something went wrong..."));
   }
+}
+
+// handle invalid parameters from express validator
+async function handle422(response, cb){
+  const result = await response.json();
+  const { error } = result;
+  const formattedErrors = formatErrors(error);
+  cb(new Error(formattedErrors));
+}
+
+// handle passwords do not match
+async function handle409(response, cb){
+  const result = await response.json();
+  const { error } = result;
+  cb(new Error(error));
 }
 
 const SignUpLink = () => (
