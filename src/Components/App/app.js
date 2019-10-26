@@ -12,6 +12,7 @@ import Home from '../Home';
 import EntireAppCatcher from '../Error/Entire';
 import NoMatch from '../404';
 import BottomNav from '../BottomNav';
+import SignUp from '../SignUp';
 import { ROUTES } from '../../Constants';
 import './styles.css';
 
@@ -34,6 +35,7 @@ const AppBase = () => (
       <Route path={ROUTES.PUPPIES} component={Puppies} />
       <Route path={ROUTES.GALLERY} component={Gallery} />
       <Route path={ROUTES.LOGIN} component={Login} />
+      <Route path={ROUTES.SIGN_UP} component={SignUp} />
       <Route component={NoMatch} />
     </Switch>
     <BottomNav />
