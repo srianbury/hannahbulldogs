@@ -43,27 +43,27 @@ const Login = () => {
           </div>
         )}
 
-        <div class="form-group">
+        <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
             value={username}
             onChange={e => setUsername(e.target.value)}
             disabled={loading}
             type="text"
-            class="form-control"
+            className="form-control"
             id="username"
             placeholder="Username"
           />
         </div>
 
-        <div class="form-group">
+        <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
             value={password}
             onChange={e => setPassword(e.target.value)}
             disabled={loading}
             type="password"
-            class="form-control"
+            className="form-control"
             id="password"
             placeholder="Password"
           />
