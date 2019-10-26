@@ -1,8 +1,17 @@
 import React, { useState, useContext } from "react";
 import { AuthUserContext } from "../../Authentication";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { SignUpLink } from "../../SignUp";
+import { ROUTES } from "../../../Constants";
 import "./styles.css";
+
+const LoginPage = () => (
+  <Container>
+    <Login />
+    <SignUpLink />
+  </Container>
+);
 
 const Login = () => {
   const { setAuthUser } = useContext(AuthUserContext);
@@ -26,55 +35,54 @@ const Login = () => {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col md="6">
-          {error && (
-            <div onClick={() => setError(false)} class="text-danger hover">
-              {error.message}
-            </div>
-          )}
-
-          <div class="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              disabled={loading}
-              type="text"
-              class="form-control"
-              id="username"
-              placeholder="Username"
-            />
+    <Row>
+      <Col md="6">
+        {error && (
+          <div onClick={() => setError(false)} className="text-danger hover">
+            {error.message}
           </div>
+        )}
 
-          <div class="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              disabled={loading}
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Password"
+        <div class="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            disabled={loading}
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            disabled={loading}
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+          />
+        </div>
+
+        <button onClick={handleSignIn} className="btn btn-sm btn-primary">
+          {loading && (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
             />
-          </div>
-
-          <button onClick={handleSignIn} className="btn btn-sm btn-primary">
-            {loading && (
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"/>
-            )}{" "}
-            Login
-          </button>
-        </Col>
-      </Row>
-    </Container>
+          )}{" "}
+          Login
+        </button>
+      </Col>
+    </Row>
   );
 };
 
@@ -108,4 +116,11 @@ async function signIn(username, password, onSuccess, onError) {
   }
 }
 
-export default Login;
+const LoginLink = () => (
+  <p>
+    Already have an account? <Link to={ROUTES.LOGIN}>Sign In</Link>
+  </p>
+);
+
+export default LoginPage;
+export { LoginLink };
