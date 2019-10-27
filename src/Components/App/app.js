@@ -14,6 +14,7 @@ import NoMatch from '../404';
 import BottomNav from '../BottomNav';
 import SignUp from '../SignUp';
 import ParentsPage from '../Parents/Page';
+import UserProfilePage from '../User';
 import { ROUTES } from '../../Constants';
 import './styles.css';
 
@@ -36,6 +37,7 @@ const AppBase = () => (
       <Route path={ROUTES.GALLERY} component={Gallery} />
       <Route path={ROUTES.LOGIN} component={Login} />
       <Route path={ROUTES.SIGN_UP} component={SignUp} />
+      <Route path={ROUTES.USER_PROFILE} component={UserProfilePage} />
       <Route component={NoMatch} />
     </Switch>
     <BottomNav />
