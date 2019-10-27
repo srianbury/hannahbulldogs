@@ -60,3 +60,4 @@ const DefaultLoading = () => (
 );
 
 export default withListLoading;
+export { DefaultLoading, DefaultError };
