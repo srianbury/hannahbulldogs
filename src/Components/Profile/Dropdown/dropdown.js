@@ -3,13 +3,14 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { AuthUserContext } from "../../Authentication";
 import { useHistory } from "react-router-dom";
 import showProfileButton from './showProfileButton';
+import { ROUTES } from '../../../Constants';
 
 const ProfileDropdown = () => {
   const history = useHistory();
   const { authUser, setAuthUser } = useContext(AuthUserContext);
   function handleLogout() {
     setAuthUser(null);
-    history.push("/");
+    history.push(ROUTES.HOME);
   }
 
   return (
@@ -35,7 +36,7 @@ const ProfileDropdown = () => {
 
 const LoggedIn = ({ handleLogout, history }) => (
   <>
-    <Dropdown.Item onClick={() => history.push("/profile")}>
+    <Dropdown.Item onClick={() => history.push(ROUTES.USER_PROFILE)}>
       Profile
     </Dropdown.Item>
     <Dropdown.Divider />
@@ -45,7 +46,7 @@ const LoggedIn = ({ handleLogout, history }) => (
 
 const NotLoggedIn = ({ history }) => (
   <>
-    <Dropdown.Item onClick={() => history.push("/login")}>Login</Dropdown.Item>
+    <Dropdown.Item onClick={() => history.push(ROUTES.LOGIN)}>Login</Dropdown.Item>
   </>
 );
 
