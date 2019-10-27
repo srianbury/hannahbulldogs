@@ -1,3 +1,26 @@
+import React from 'react';
+
+// Fallback
+// if nothing is pass a default component will return
+// if null is passed null will return
+// if a fallback is given it will return that
+const withAuthorizationHOC = (Component) => (props) => {
+  const { authUser, accessLevels, Fallback, ...rest } = props;
+
+  if(withAuthorization(authUser, accessLevels)){
+    return(
+      <Component 
+        {...rest} />
+    );
+  } 
+
+  if(typeof(Fallback) !== 'undefined'){
+    return Fallback === null ? null : <Fallback />
+  }
+
+  return <NotAuthorized />;
+};
+
 /**
  * @param {object} authUser (auth user context)
  * @param {array} accessLevels (array of access levels (strings) that have access to the item)
@@ -21,4 +44,10 @@ function withAuthorization(authUser, accessLevels) {
   }
 }
 
-export default withAuthorization;
+const NotAuthorized = () => (
+  <div className='text-danger'>Not Authorized</div>
+);
+
+
+export default withAuthorizationHOC;
+export { withAuthorization, NotAuthorized };

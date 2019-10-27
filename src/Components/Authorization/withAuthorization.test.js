@@ -1,4 +1,4 @@
-import withAuthorization from "./index";
+import { withAuthorization } from "./index";
 import { ACCESS } from '../../Constants';
 
 describe("With Authorization Tests", () => {
