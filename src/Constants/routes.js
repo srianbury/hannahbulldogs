@@ -1,5 +1,6 @@
 export const HOME = '/';
 export const PARENTS = '/parents';
+export const PARENTS_EDIT = '/parents/edit';
 export const PUPPIES = '/puppies';
 export const GALLERY = '/gallery';
 export const LOGIN = '/login';

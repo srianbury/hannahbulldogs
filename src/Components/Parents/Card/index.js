@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { Card, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { ACCESS } from "../../../Constants";
+import { ACCESS, ROUTES } from "../../../Constants";
 import { AuthUserContext } from '../../Authentication';
-import withAuthorization from '../../Authorization';
+import withAuthorizationHOC from '../../Authorization';
 
-
+const Edit = () => (<Link to={ROUTES.PARENTS_EDIT}>Edit</Link>);
+const EditWithAuthorization = withAuthorizationHOC(Edit);
 const editAccess = [ACCESS.ADMIN, ACCESS.MINDFLAYER];
+
 const DogCard = ({ name, sex, breed, images }) => {
   const { authUser } = useContext(AuthUserContext);
   return (
@@ -24,7 +26,10 @@ const DogCard = ({ name, sex, breed, images }) => {
           <div>{getSex(sex)}</div>
         </Card.Title>
         <Card.Text>{breed}</Card.Text>
-        {withAuthorization(authUser, editAccess) && <Link>Edit</Link>}
+        <EditWithAuthorization 
+          authUser={authUser}
+          accessLevels={editAccess}
+          Fallback={null} />
       </Card.Body>
     </Card>
   );
@@ -35,3 +40,4 @@ function getSex(sex) {
 }
 
 export default DogCard;
+export { EditWithAuthorization };
