@@ -1,16 +1,25 @@
 import React, { useContext } from "react";
 import { Card, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { ACCESS, ROUTES } from "../../../Constants";
-import { AuthUserContext } from '../../Authentication';
-import withAuthorizationHOC from '../../Authorization';
+import { ROUTES } from "../../../Constants";
+import { AuthUserContext } from "../../Authentication";
+import withAuthorizationHOC from "../../Authorization";
 
-const Edit = () => (<Link to={ROUTES.PARENTS_EDIT}>Edit</Link>);
+const Edit = ({ data }) => (
+  <Link
+    to={{
+      pathname: `${ROUTES.PARENTS_EDIT}/${data._id}}`,
+      state: { ...data }
+    }}
+  >
+    Edit
+  </Link>
+);
 const EditWithAuthorization = withAuthorizationHOC(Edit);
-const editAccess = [ACCESS.ADMIN, ACCESS.MINDFLAYER];
 
-const DogCard = ({ name, sex, breed, images }) => {
+const DogCard = props => {
   const { authUser } = useContext(AuthUserContext);
+  const { name, sex, breed, images, editAccess } = props;
   return (
     <Card>
       <Carousel>
@@ -26,10 +35,12 @@ const DogCard = ({ name, sex, breed, images }) => {
           <div>{getSex(sex)}</div>
         </Card.Title>
         <Card.Text>{breed}</Card.Text>
-        <EditWithAuthorization 
+        <EditWithAuthorization
+          data={props}
           authUser={authUser}
           accessLevels={editAccess}
-          Fallback={null} />
+          Fallback={null}
+        />
       </Card.Body>
     </Card>
   );
