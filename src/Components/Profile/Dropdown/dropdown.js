@@ -3,13 +3,14 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { AuthUserContext } from "../../Authentication";
 import { useHistory } from "react-router-dom";
 import showProfileButton from './showProfileButton';
-import { ROUTES } from '../../../Constants';
+import { ROUTES, STORAGE } from '../../../Constants';
 
 const ProfileDropdown = () => {
   const history = useHistory();
   const { authUser, setAuthUser } = useContext(AuthUserContext);
   function handleLogout() {
     setAuthUser(null);
+    localStorage.removeItem(STORAGE.USER);
     history.push(ROUTES.HOME);
   }
 

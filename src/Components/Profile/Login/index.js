@@ -3,7 +3,7 @@ import { AuthUserContext } from "../../Authentication";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import { SignUpLink } from "../../SignUp";
-import { ROUTES } from "../../../Constants";
+import { ROUTES, STORAGE } from "../../../Constants";
 import "./styles.css";
 
 const LoginPage = () => (
@@ -18,20 +18,43 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  function handleSignIn() {
-    setLoading(true);
-    function onSuccess(user) {
-      setAuthUser(user);
-      history.push("/");
-    }
-    function onError(e) {
+  async function handleSignIn() {
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:4020/api/dev/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      const { ok } = response;
+      if (ok) {
+        const user = await response.json();
+        setAuthUser(user);
+        if(keepMeLoggedIn){
+          localStorage.setItem(STORAGE.USER, JSON.stringify(user));
+        }
+        history.push("/");
+      } else {
+        const { status } = response;
+        switch (status) {
+          case 404:
+          case 401:
+            const result = await response.json();
+            const { error } = result;
+            throw new Error(error);
+          default:
+            throw new Error("Something went wrong...");
+        }
+      }
+    } catch (e) {
       setLoading(false);
       setError(e);
     }
-    signIn(username, password, onSuccess, onError);
   }
 
   return (
@@ -69,6 +92,22 @@ const Login = () => {
           />
         </div>
 
+        <div className="form-check">
+          <input 
+            onChange={()=>setKeepMeLoggedIn(prev => !prev)}
+            className="form-check-input" 
+            type="checkbox" 
+            checked={keepMeLoggedIn}
+            id="keepmeloggedin"
+          />
+          <label 
+            class="form-check-label" 
+            for="keepmeloggedin"
+          >
+            Keep me logged in
+          </label>
+        </div>
+
         <button onClick={handleSignIn} className="btn btn-sm btn-primary">
           {loading && (
             <Spinner
@@ -85,36 +124,6 @@ const Login = () => {
     </Row>
   );
 };
-
-async function signIn(username, password, onSuccess, onError) {
-  // fetch, do some db call and verification
-  try {
-    const response = await fetch("http://localhost:4020/api/dev/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
-    const { ok } = response;
-    if (ok) {
-      const user = await response.json();
-      onSuccess(user);
-    } else {
-      const { status } = response;
-      switch (status) {
-        case 404:
-        case 401:
-          const result = await response.json();
-          const { error } = result;
-          onError(new Error(error));
-          break;
-        default:
-          throw new Error("Something went wrong...");
-      }
-    }
-  } catch (e) {
-    onError(e);
-  }
-}
 
 const LoginLink = () => (
   <p>
