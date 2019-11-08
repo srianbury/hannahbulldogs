@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, /* Row, Col, */ CardColumns } from "react-bootstrap";
 import withListLoading from "../../Loading/withListLoading";
 import ParentCard from "../Card";
 
 const ParentsBase = ({ data }) => (
-  <Row>
-    <Col md={4} sm={6}>
+  <CardColumns>
       {data.map(parent => (
-        <ParentCard key={parent._id} {...parent} />
+        // <Col md={4} sm={6}>
+          <ParentCard key={parent._id} {...parent} />
+        // </Col>
       ))}
-    </Col>
-  </Row>
+  </CardColumns>
 );
 
 const ParentsWithLoading = withListLoading(ParentsBase);
