@@ -17,6 +17,7 @@ import ParentsPage from '../Parents/Page';
 import UserProfilePage from '../User';
 import EditParentPage from '../Parents/Edit';
 import { ROUTES } from '../../Constants';
+import Notifications from '../Notifications';
 import './styles.css';
 
 const Puppies = () => <div>Puppies Page</div>;
@@ -33,7 +34,7 @@ const AppBase = () => (
     <Nav />
     <Switch>
       <Route exact path={ROUTES.HOME} component={Home} />
-      <Route path={ROUTES.PARENTS_EDIT} component={EditParentPage} />
+      <Route path={`${ROUTES.PARENTS_EDIT}/:id`} component={EditParentPage} />
       <Route path={ROUTES.PARENTS} component={ParentsPage} />
       <Route path={ROUTES.PUPPIES} component={Puppies} />
       <Route path={ROUTES.GALLERY} component={Gallery} />
@@ -42,6 +43,7 @@ const AppBase = () => (
       <Route path={ROUTES.USER_PROFILE} component={UserProfilePage} />
       <Route component={NoMatch} />
     </Switch>
+    <Notifications />
     <BottomNav />
   </>
 );
