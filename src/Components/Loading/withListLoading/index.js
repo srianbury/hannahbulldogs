@@ -5,13 +5,14 @@ import EmptyList from '../Empty';
 
 
 // Component props:
-// data (list) the data to be displayed *required
+// loading (list) typically the data to be displayed, 
+//   by passing it via loading can name the data whatever we want *required
 // error (Error) Error object
 // LoadingFallback (Component) component to show when data is loading
 // EmptyFallback (Component) component to show when the data is empty
 // ErrorFallback (Component) component to show when there is an error
 const withListLoading = (Component) => (props) => {
-    const { data, error, ErrorFallback, LoadingFallback, EmptyFallback } = props;
+    const { loading, error, ErrorFallback, LoadingFallback, EmptyFallback, ...rest } = props;
     if(error){
         return(
             <>{ErrorFallback
@@ -21,7 +22,7 @@ const withListLoading = (Component) => (props) => {
         );
     }
 
-    if(data===null){
+    if(loading===null){
         return(
             <>{LoadingFallback
                 ? <LoadingFallback />
@@ -30,7 +31,7 @@ const withListLoading = (Component) => (props) => {
         );
     }
 
-    if(data.length===0){
+    if(loading.length===0){
         return(
             <>{EmptyFallback
                 ? <EmptyFallback />
@@ -40,7 +41,7 @@ const withListLoading = (Component) => (props) => {
     }
 
     return(
-        <Component {...props} />
+        <Component {...rest} />
     );
 };
 
