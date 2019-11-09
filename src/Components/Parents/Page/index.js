@@ -3,9 +3,9 @@ import { Container, /* Row, Col, */ CardColumns } from "react-bootstrap";
 import withListLoading from "../../Loading/withListLoading";
 import ParentCard from "../Card";
 
-const ParentsBase = ({ data }) => (
+const ParentsBase = ({ parents }) => (
   <CardColumns>
-      {data.map(parent => (
+      {parents.sort((a, b) => a.birthday.localeCompare(b.birthday)).map(parent => (
         // <Col md={4} sm={6}>
           <ParentCard key={parent._id} {...parent} />
         // </Col>
@@ -38,7 +38,10 @@ const ParentsPage = () => {
   }, []);
   return (
     <Container>
-      <ParentsWithLoading data={parents} error={readError} />
+      <ParentsWithLoading
+        loading={parents} 
+        parents={parents} 
+        error={readError} />
     </Container>
   );
 };
