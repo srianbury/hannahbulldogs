@@ -2,7 +2,10 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 
 const BottomNav = () => (
-  <Navbar className='border border-dark border-left-0 border-right-0 border-bottom-0 mt-2'>
+  <Navbar
+    bg='light'
+    variant='light' 
+    className='mt-2'>
     <Nav className="mr-auto" />
     <Nav>
         <a className='ml-2'

@@ -17,6 +17,7 @@ const Navigation = ({ navColors, navItems, navBrand, rightSide }) => {
   useOnClickOutside(ref, () => setIsExpanded(false));
   return (
     <Navbar
+      sticky='top'
       expanded={isExpanded}
       onSelect={closeCollapse}
       bg={navColors.bg}
