@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Container,
   /* Row, Col, */ CardColumns,
 } from 'react-bootstrap';
 import withListLoading from '../../Loading/withListLoading';
 import ParentCard from '../Card';
+import { DataContext } from '../../Context';
 
 const ParentsBase = ({ parents }) => (
   <CardColumns>
@@ -20,20 +21,19 @@ const ParentsBase = ({ parents }) => (
 
 const ParentsWithLoading = withListLoading(ParentsBase);
 const ParentsPage = () => {
-  const [parents, setParents] = useState(null);
+  const { data, updateNode } = useContext(DataContext);
   const [readError, setReadError] = useState(null);
 
   useEffect(() => {
     async function read() {
       try {
         const response = await fetch(
-          `${process.env.PUBLIC_URL}/dogs`,
+          `${process.env.REACT_APP_API_URL}/dogs`,
         );
         const { ok } = response;
         if (ok) {
           const result = await response.json();
-          const { data } = result;
-          setParents(data);
+          updateNode('parents', result.data);
         } else {
           throw new Error('');
         }
@@ -43,13 +43,15 @@ const ParentsPage = () => {
         );
       }
     }
-    read();
-  }, []);
+    if (!data.parents) {
+      read();
+    }
+  }, [data.parents, updateNode]);
   return (
     <Container>
       <ParentsWithLoading
-        loading={parents}
-        parents={parents}
+        loading={data.parents}
+        parents={data.parents}
         error={readError}
       />
     </Container>

@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Header from './header.js';
 import { AboutBrief } from '../About';
 import { GalleryPreview } from '../Gallery';
 import withLoading from '../Loading/withLoading';
+import { DataContext } from '../Context';
 
 const Home = () => {
-  const [data, setData] = useState(null);
+  const { data, updateNode } = useContext(DataContext);
+
   useEffect(() => {
     async function read() {
-      const response = await fetch(`${process.env.PUBLIC_URL}/home`);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/home`,
+      );
       const result = await response.json();
-      setData(result.data);
+      updateNode('home', result.data);
     }
-    read();
-  }, []);
+
+    if (!data.home) {
+      read();
+    }
+  }, [data, updateNode]);
+
   return (
     <>
       <Header />
-      <InfoWithLoading loading={data} data={data} />
+      <InfoWithLoading loading={data.home} data={data.home} />
     </>
   );
 };

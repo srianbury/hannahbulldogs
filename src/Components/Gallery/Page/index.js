@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import InstagramEmbed from 'react-instagram-embed';
 import { Container, Row, Col } from 'react-bootstrap';
 import withListLoading from '../../Loading/withListLoading';
+import { DataContext } from '../../Context';
 
 const GalleryPage = () => {
-  const [images, setImages] = useState(null);
+  const { data, updateNode } = useContext(DataContext);
   useEffect(() => {
     async function read() {
       const response = await fetch(
-        `${process.env.PUBLIC_URL}/gallery`,
+        `${process.env.REACT_APP_API_URL}/gallery`,
       );
       const result = await response.json();
-      setImages(result.data);
+      updateNode('gallery', result.data);
     }
-    read();
-  }, []);
+    if (!data.gallery) {
+      read();
+    }
+  }, [data.gallery, updateNode]);
   return (
     <Container>
       <Row>
-        <GalleryWithListLoading loading={images} images={images} />
+        <GalleryWithListLoading
+          loading={data.gallery}
+          images={data.gallery}
+        />
       </Row>
     </Container>
   );

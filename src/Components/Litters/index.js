@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import withListLoading from '../Loading/withListLoading';
 import LitterCard from './desc';
+import { DataContext } from '../Context';
 
 const LitterPageLogic = () => {
-  const [litters, setLitters] = useState(null);
+  const { data, updateNode } = useContext(DataContext);
+
   useEffect(() => {
     async function read() {
       const response = await fetch(
-        `${process.env.PUBLIC_URL}/litters`,
+        `${process.env.REACT_APP_API_URL}/litters`,
       );
       const result = await response.json();
-      const data = result.data;
-      setLitters(data);
+      updateNode('puppies', result.data);
     }
 
-    read();
-  }, []);
+    if (!data.puppies) {
+      read();
+    }
+  }, [data.puppies, updateNode]);
   return (
-    <LitterPageWithListLoading loading={litters} litters={litters} />
+    <LitterPageWithListLoading
+      loading={data.puppies}
+      litters={data.puppies}
+    />
   );
 };
 
@@ -27,7 +33,7 @@ const LitterPageView = ({ litters }) => (
     {litters
       .sort((a, b) => a.birthday.localeCompare(b.birthday))
       .map(litter => (
-        <Col sm={12}>
+        <Col sm={12} key={litter._id}>
           <LitterCard key={litter._id} litter={litter} />
         </Col>
       ))}
