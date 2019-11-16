@@ -1,32 +1,19 @@
-import React from "react";
-import DescContainer from "../../Home/Short";
+import React from 'react';
+import DescContainer from '../../Home/Short';
 
 const Left = () => (
   <>
-    <DescContainer.Title title={"About"} />
-    <img
-      className="img img-fluid"
-      src="https://www.w3schools.com/w3images/tablesetting2.jpg"
-      alt="abt"
-    />
+    <DescContainer.Title title={'About'} />
   </>
 );
-const Right = () => (
-  <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-  sed do eiusmod tempor incididunt ut labore et dolore magna 
-  aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-  ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-  Duis aute irure dolor in reprehenderit in voluptate velit 
-  esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
-  occaecat cupidatat non proident, sunt in culpa qui officia 
-  deserunt mollit anim id est laborum.</div>
-);
+const Right = ({ description }) => <div>{description.text}</div>;
 
-const Brief = () => (
-  <DescContainer 
+const Brief = ({ about }) => (
+  <DescContainer
     title="About"
     left={<Left />}
-    right={<Right />} />
+    right={<Right description={about.description} />}
+  />
 );
 
 export default Brief;
