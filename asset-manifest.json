@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/hannahbulldogs/static/css/main.7fe38a2f.chunk.css",
+    "main.js": "/hannahbulldogs/static/js/main.131ddc16.chunk.js",
+    "main.js.map": "/hannahbulldogs/static/js/main.131ddc16.chunk.js.map",
+    "runtime-main.js": "/hannahbulldogs/static/js/runtime-main.ee8c205f.js",
+    "runtime-main.js.map": "/hannahbulldogs/static/js/runtime-main.ee8c205f.js.map",
+    "static/css/2.5dbdccff.chunk.css": "/hannahbulldogs/static/css/2.5dbdccff.chunk.css",
+    "static/js/2.6a65da60.chunk.js": "/hannahbulldogs/static/js/2.6a65da60.chunk.js",
+    "static/js/2.6a65da60.chunk.js.map": "/hannahbulldogs/static/js/2.6a65da60.chunk.js.map",
+    "index.html": "/hannahbulldogs/index.html",
+    "precache-manifest.ed1650f761cda2c187bc9d686f126e0f.js": "/hannahbulldogs/precache-manifest.ed1650f761cda2c187bc9d686f126e0f.js",
+    "service-worker.js": "/hannahbulldogs/service-worker.js",
+    "static/css/2.5dbdccff.chunk.css.map": "/hannahbulldogs/static/css/2.5dbdccff.chunk.css.map",
+    "static/css/main.7fe38a2f.chunk.css.map": "/hannahbulldogs/static/css/main.7fe38a2f.chunk.css.map",
+    "static/media/add_image.webp": "/hannahbulldogs/static/media/add_image.7c83ec83.webp"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ee8c205f.js",
+    "static/css/2.5dbdccff.chunk.css",
+    "static/js/2.6a65da60.chunk.js",
+    "static/css/main.7fe38a2f.chunk.css",
+    "static/js/main.131ddc16.chunk.js"
+  ]
+}
