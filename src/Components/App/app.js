@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Switch,
 } from 'react-router-dom';
@@ -24,7 +24,7 @@ import withDataContext from '../Context';
 import './styles.css';
 
 const AppContainer = () => (
-  <Router>
+  <Router basename="/">
     <App FallbackError={EntireAppCatcher} />
   </Router>
 );
