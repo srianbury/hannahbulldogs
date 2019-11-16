@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
-import { LoginLink } from "../Profile/Login";
+import React, { useState, useContext } from 'react';
+import { useHistory, Link } from 'react-router-dom';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { LoginLink } from '../Profile/Login';
 import formatErrors from '../Error/Parameters';
 import { AuthUserContext } from '../Authentication';
-import { ROUTES } from "../../Constants";
+import { ROUTES } from '../../Constants';
 
 const SignUpPage = () => (
   <Container>
@@ -16,10 +16,10 @@ const SignUpPage = () => (
 const SignUp = () => {
   const { setAuthUser } = useContext(AuthUserContext);
   const [error, setError] = useState(null);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPwd, setConfirmPwd] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPwd, setConfirmPwd] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -28,7 +28,7 @@ const SignUp = () => {
     setLoading(true);
     function onSuccess(user) {
       setAuthUser(user);
-      history.push("/");
+      history.push('/');
     }
     function onError(e) {
       setLoading(false);
@@ -42,7 +42,10 @@ const SignUp = () => {
       <Col md="6">
         <h5>Sign Up</h5>
         {error && (
-          <div onClick={() => setError(false)} class="text-danger hover">
+          <div
+            onClick={() => setError(false)}
+            class="text-danger hover"
+          >
             {error.message}
           </div>
         )}
@@ -99,7 +102,10 @@ const SignUp = () => {
           />
         </div>
 
-        <button onClick={handleSignUp} className="btn btn-sm btn-primary">
+        <button
+          onClick={handleSignUp}
+          className="btn btn-sm btn-primary"
+        >
           {loading && (
             <Spinner
               as="span"
@@ -108,7 +114,7 @@ const SignUp = () => {
               role="status"
               aria-hidden="true"
             />
-          )}{" "}
+          )}{' '}
           Sign Up
         </button>
       </Col>
@@ -116,12 +122,24 @@ const SignUp = () => {
   );
 };
 
-async function signUp(username, email, password, confirmPassword, onSuccess, onError) {
+async function signUp(
+  username,
+  email,
+  password,
+  confirmPassword,
+  onSuccess,
+  onError,
+) {
   try {
-    const response = await fetch("http://localhost:4020/api/dev/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password, confirmPassword })
+    const response = await fetch(`${process.env.PUBLIC_URL}/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        confirmPassword,
+      }),
     });
     const { ok } = response;
     if (ok) {
@@ -137,16 +155,16 @@ async function signUp(username, email, password, confirmPassword, onSuccess, onE
           handle409(response, onError);
           break;
         default:
-          throw new Error("Something went wrong...");
+          throw new Error('Something went wrong...');
       }
     }
   } catch {
-    onError(new Error("Something went wrong..."));
+    onError(new Error('Something went wrong...'));
   }
 }
 
 // handle invalid parameters from express validator
-async function handle422(response, cb){
+async function handle422(response, cb) {
   const result = await response.json();
   const { error } = result;
   const formattedErrors = formatErrors(error);
@@ -154,7 +172,7 @@ async function handle422(response, cb){
 }
 
 // handle passwords do not match
-async function handle409(response, cb){
+async function handle409(response, cb) {
   const result = await response.json();
   const { error } = result;
   cb(new Error(error));

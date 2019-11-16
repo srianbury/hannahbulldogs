@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
-import { AuthUserContext } from "../../Authentication";
-import { Link, useHistory } from "react-router-dom";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
-import { SignUpLink } from "../../SignUp";
-import { ROUTES, STORAGE } from "../../../Constants";
-import "./styles.css";
+import React, { useState, useContext } from 'react';
+import { AuthUserContext } from '../../Authentication';
+import { Link, useHistory } from 'react-router-dom';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { SignUpLink } from '../../SignUp';
+import { ROUTES, STORAGE } from '../../../Constants';
+import './styles.css';
 
 const LoginPage = () => (
   <Container>
@@ -16,8 +16,8 @@ const LoginPage = () => (
 const Login = () => {
   const { setAuthUser } = useContext(AuthUserContext);
   const [error, setError] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -25,20 +25,23 @@ const Login = () => {
   async function handleSignIn() {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:4020/api/dev/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-      });
+      const response = await fetch(
+        `${process.env.PUBLIC_URL}/login`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        },
+      );
 
       const { ok } = response;
       if (ok) {
         const user = await response.json();
         setAuthUser(user);
-        if(keepMeLoggedIn){
+        if (keepMeLoggedIn) {
           localStorage.setItem(STORAGE.USER, JSON.stringify(user));
         }
-        history.push("/");
+        history.push('/');
       } else {
         const { status } = response;
         switch (status) {
@@ -48,7 +51,7 @@ const Login = () => {
             const { error } = result;
             throw new Error(error);
           default:
-            throw new Error("Something went wrong...");
+            throw new Error('Something went wrong...');
         }
       }
     } catch (e) {
@@ -61,7 +64,10 @@ const Login = () => {
     <Row>
       <Col md="6">
         {error && (
-          <div onClick={() => setError(false)} className="text-danger hover">
+          <div
+            onClick={() => setError(false)}
+            className="text-danger hover"
+          >
             {error.message}
           </div>
         )}
@@ -93,22 +99,22 @@ const Login = () => {
         </div>
 
         <div className="form-check">
-          <input 
-            onChange={()=>setKeepMeLoggedIn(prev => !prev)}
-            className="form-check-input" 
-            type="checkbox" 
+          <input
+            onChange={() => setKeepMeLoggedIn(prev => !prev)}
+            className="form-check-input"
+            type="checkbox"
             checked={keepMeLoggedIn}
             id="keepmeloggedin"
           />
-          <label 
-            class="form-check-label" 
-            for="keepmeloggedin"
-          >
+          <label class="form-check-label" for="keepmeloggedin">
             Keep me logged in
           </label>
         </div>
 
-        <button onClick={handleSignIn} className="btn btn-sm btn-primary">
+        <button
+          onClick={handleSignIn}
+          className="btn btn-sm btn-primary"
+        >
           {loading && (
             <Spinner
               as="span"
@@ -117,7 +123,7 @@ const Login = () => {
               role="status"
               aria-hidden="true"
             />
-          )}{" "}
+          )}{' '}
           Login
         </button>
       </Col>

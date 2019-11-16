@@ -8,9 +8,7 @@ const Home = () => {
   const [data, setData] = useState(null);
   useEffect(() => {
     async function read() {
-      const response = await fetch(
-        `http://localhost:4020/api/dev/home`,
-      );
+      const response = await fetch(`${process.env.PUBLIC_URL}/home`);
       const result = await response.json();
       setData(result.data);
     }

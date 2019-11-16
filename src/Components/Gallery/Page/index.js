@@ -8,7 +8,7 @@ const GalleryPage = () => {
   useEffect(() => {
     async function read() {
       const response = await fetch(
-        `http://localhost:4020/api/dev/gallery`,
+        `${process.env.PUBLIC_URL}/gallery`,
       );
       const result = await response.json();
       setImages(result.data);
