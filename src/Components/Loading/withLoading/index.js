@@ -1,6 +1,5 @@
 import React from 'react';
 import { DefaultError, DefaultLoading } from '../Defaults';
-import EmptyList from '../Empty';
 
 // Component props:
 // loading (list) typically the data to be displayed,
@@ -9,7 +8,7 @@ import EmptyList from '../Empty';
 // LoadingFallback (Component) component to show when data is loading
 // EmptyFallback (Component) component to show when the data is empty
 // ErrorFallback (Component) component to show when there is an error
-const withListLoading = Component => props => {
+const withLoading = Component => props => {
   const {
     loading,
     error,
@@ -38,12 +37,7 @@ const withListLoading = Component => props => {
     );
   }
 
-  if (loading.length === 0) {
-    return <>{EmptyFallback ? <EmptyFallback /> : <EmptyList />}</>;
-  }
-
   return <Component {...rest} />;
 };
 
-export default withListLoading;
-export { DefaultLoading, DefaultError };
+export default withLoading;
