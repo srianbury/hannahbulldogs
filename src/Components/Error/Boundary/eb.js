@@ -1,22 +1,23 @@
 import React from 'react';
 import * as Sentry from '@sentry/browser';
 import SentryFeedbackButton from '../SentryErrorForm';
+import { Container } from 'react-bootstrap';
 
-class ErrorBoundary extends React.Component{
-  constructor(props){
+class ErrorBoundary extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      hasError: false
+      hasError: false,
     };
   }
 
-  static getDerivedStateFromError(err){
+  static getDerivedStateFromError(err) {
     return { hasError: true };
   }
 
-  componentDidCatch(error, errorInfo){
+  componentDidCatch(error, errorInfo) {
     // log to somewhere
-    Sentry.withScope((scope) => {
+    Sentry.withScope(scope => {
       scope.setExtras(errorInfo);
       const eventId = Sentry.captureException(error);
       this.setState({ eventId });
@@ -25,28 +26,29 @@ class ErrorBoundary extends React.Component{
 
   // need to remove the error, otherwise when we go home the error is still there
   // and the error boundary will still show
-  removeErrorAndGoHome = (cb) => {
+  removeErrorAndGoHome = cb => {
     this.setState({
-      hasError: false
+      hasError: false,
     });
     cb();
-  }
+  };
 
-  render(){
+  render() {
     const { hasError } = this.state;
-    const { 
-      children, 
-      fallback: Fallback 
-    } = this.props;
+    const { children, Fallback } = this.props;
 
-    if(hasError){
-      return Fallback 
-        ? <Fallback
-            removeErrorAndGoHome={this.removeErrorAndGoHome}
-            eventId={this.state.eventId} /> 
-        : <DefaultFallback
-            removeErrorAndGoHome={this.removeErrorAndGoHome}
-            eventId={this.state.eventId} />;
+    if (hasError) {
+      return Fallback ? (
+        <Fallback
+          removeErrorAndGoHome={this.removeErrorAndGoHome}
+          eventId={this.state.eventId}
+        />
+      ) : (
+        <DefaultFallback
+          removeErrorAndGoHome={this.removeErrorAndGoHome}
+          eventId={this.state.eventId}
+        />
+      );
     }
 
     return children;
@@ -54,18 +56,18 @@ class ErrorBoundary extends React.Component{
 }
 
 const DefaultFallback = ({ eventId }) => (
-  <div>
-    <h2>Whoops...</h2>
-    <div>Something went wrong...</div>
-    <SentryFeedbackButton 
-      eventId={eventId} />
-  </div>
+  <Container className="d-flex justify-content-center">
+    <div>
+      <h2>Whoops...</h2>
+      <div>Something went wrong...</div>
+      <SentryFeedbackButton eventId={eventId} />
+    </div>
+  </Container>
 );
 
-const withErrorBoundary = (Comp, fallback) => (props) => (
-  <ErrorBoundary
-    fallback={fallback}>
-    <Comp {...props} />
+const withErrorBoundary = Comp => ({ FallbackError, ...rest }) => (
+  <ErrorBoundary Fallback={FallbackError}>
+    <Comp {...rest} />
   </ErrorBoundary>
 );
 

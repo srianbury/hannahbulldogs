@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
-    BrowserRouter as Router,
-    Route,
-    Switch
+  BrowserRouter as Router,
+  Route,
+  Switch,
 } from 'react-router-dom';
 import Nav from '../Navbar';
-import Authentication from '../Authentication';
+import { withAuthentication } from '../Authentication';
 import Login from '../Profile/Login';
 import withErrorBoundary from '../Error/Boundary';
 import Home from '../Home';
@@ -20,11 +20,12 @@ import { ROUTES } from '../../Constants';
 import Notifications from '../Notifications';
 import Gallery from '../Gallery';
 import LitterPage from '../Litters';
+import withDataContext from '../Context';
 import './styles.css';
 
 const AppContainer = () => (
   <Router>
-    <App />
+    <App FallbackError={EntireAppCatcher} />
   </Router>
 );
 
@@ -33,7 +34,10 @@ const AppBase = () => (
     <Nav />
     <Switch>
       <Route exact path={ROUTES.HOME} component={Home} />
-      <Route path={`${ROUTES.PARENTS_EDIT}/:id`} component={EditParentPage} />
+      <Route
+        path={`${ROUTES.PARENTS_EDIT}/:id`}
+        component={EditParentPage}
+      />
       <Route path={ROUTES.PARENTS} component={ParentsPage} />
       <Route path={ROUTES.PUPPIES} component={LitterPage} />
       <Route path={ROUTES.GALLERY} component={Gallery} />
@@ -47,12 +51,8 @@ const AppBase = () => (
   </>
 );
 
-const WithAuthentication = () => (
-  <Authentication>
-      <AppBase />
-  </Authentication>
+const App = withErrorBoundary(
+  withAuthentication(withDataContext(AppBase)),
 );
-
-const App = withErrorBoundary(WithAuthentication, EntireAppCatcher);
 
 export default AppContainer;
