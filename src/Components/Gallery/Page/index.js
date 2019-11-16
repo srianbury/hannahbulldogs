@@ -1,23 +1,39 @@
-import React from "react";
-import InstagramEmbed from "react-instagram-embed";
+import React, { useState, useEffect } from 'react';
+import InstagramEmbed from 'react-instagram-embed';
 import { Container, Row, Col } from 'react-bootstrap';
+import withListLoading from '../../Loading/withListLoading';
 
-const IMAGES = [
-  { url: "https://www.instagram.com/p/B4EDxY3BIyR/" },
-  { url: "https://www.instagram.com/p/B3ycF4RhGt3/" }
-];
+const GalleryPage = () => {
+  const [images, setImages] = useState(null);
+  useEffect(() => {
+    async function read() {
+      const response = await fetch(
+        `http://localhost:4020/api/dev/gallery`,
+      );
+      const result = await response.json();
+      setImages(result.data);
+    }
+    read();
+  }, []);
+  return (
+    <Container>
+      <Row>
+        <GalleryWithListLoading loading={images} images={images} />
+      </Row>
+    </Container>
+  );
+};
 
-const GalleryPage = () => (
-  <Container>
-  <Row>
-    {IMAGES.map(image => (
-      <Col sm={6} key={image.url}>
+const Gallery = ({ images }) => (
+  <>
+    {images.map(image => (
+      <Col sm={6} key={image._id}>
         <InstagramEmbed
           url={image.url}
           maxWidth={200}
           hideCaption={false}
-          containerTagName='div'
-          protocol=''
+          containerTagName="div"
+          protocol=""
           injectScript
           onLoading={() => {}}
           onSuccess={() => {}}
@@ -26,8 +42,8 @@ const GalleryPage = () => (
         />
       </Col>
     ))}
-  </Row>
-  </Container>
+  </>
 );
+const GalleryWithListLoading = withListLoading(Gallery);
 
 export default GalleryPage;
