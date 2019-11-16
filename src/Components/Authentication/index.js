@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import AuthUserContext from './context';
 import { STORAGE } from '../../Constants';
 
 const Authentication = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem(STORAGE.USER));
-    if(user){
+    if (user) {
       setAuthUser(user);
     }
   }, []);
@@ -16,7 +16,7 @@ const Authentication = ({ children }) => {
     <AuthUserContext.Provider
       value={{
         authUser,
-        setAuthUser
+        setAuthUser,
       }}
     >
       {children}
@@ -24,6 +24,11 @@ const Authentication = ({ children }) => {
   );
 };
 
+const withAuthentication = Component => props => (
+  <Authentication>
+    <Component {...props} />
+  </Authentication>
+);
 
 export default Authentication;
-export { AuthUserContext };
+export { withAuthentication, AuthUserContext };
