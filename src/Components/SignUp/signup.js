@@ -131,16 +131,19 @@ async function signUp(
   onError,
 ) {
   try {
-    const response = await fetch(`${process.env.PUBLIC_URL}/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-        confirmPassword,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/signup`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          confirmPassword,
+        }),
+      },
+    );
     const { ok } = response;
     if (ok) {
       const user = await response.json();
