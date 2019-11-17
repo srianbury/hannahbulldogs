@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d78c369180a46815ddc3bc217f4613ed",
+    "revision": "9f266de4629ca1851277fdefe1f5fb35",
     "url": "/hannahbulldogs/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/hannahbulldogs/static/css/2.39017165.chunk.css"
   },
   {
-    "revision": "f57d46ba434a6ae85a0f",
+    "revision": "f9a0ff25617e8498330b",
     "url": "/hannahbulldogs/static/css/main.440a4190.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/hannahbulldogs/static/js/2.78f790e0.chunk.js"
   },
   {
-    "revision": "f57d46ba434a6ae85a0f",
-    "url": "/hannahbulldogs/static/js/main.6af5717f.chunk.js"
+    "revision": "f9a0ff25617e8498330b",
+    "url": "/hannahbulldogs/static/js/main.51cf6bbf.chunk.js"
   },
   {
     "revision": "671e8c5b581d796bbd41",
