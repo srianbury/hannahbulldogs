@@ -1,18 +1,25 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import InstagramEmbed from 'react-instagram-embed';
 import { Container, Row, Col } from 'react-bootstrap';
 import withListLoading from '../../Loading/withListLoading';
 import { DataContext } from '../../Context';
+import sentryLogger from '../../../Functions/Logger';
 
 const GalleryPage = () => {
   const { data, updateNode } = useContext(DataContext);
+  const [error, setError] = useState(null);
   useEffect(() => {
     async function read() {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/gallery`,
-      );
-      const result = await response.json();
-      updateNode('gallery', result.data);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/gallery`,
+        );
+        const result = await response.json();
+        updateNode('gallery', result.data);
+      } catch (e) {
+        sentryLogger(e);
+        setError(new Error('Failed to fetch.'));
+      }
     }
     if (!data.gallery) {
       read();
@@ -22,6 +29,7 @@ const GalleryPage = () => {
     <Container>
       <Row>
         <GalleryWithListLoading
+          error={error}
           loading={data.gallery}
           images={data.gallery}
         />

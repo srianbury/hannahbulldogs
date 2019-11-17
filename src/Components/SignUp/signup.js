@@ -5,6 +5,7 @@ import { LoginLink } from '../Profile/Login';
 import formatErrors from '../Error/Parameters';
 import { AuthUserContext } from '../Authentication';
 import { ROUTES } from '../../Constants';
+import sentryLogger from '../../Functions/Logger';
 
 const SignUpPage = () => (
   <Container>
@@ -161,7 +162,8 @@ async function signUp(
           throw new Error('Something went wrong...');
       }
     }
-  } catch {
+  } catch (e) {
+    sentryLogger(e);
     onError(new Error('Something went wrong...'));
   }
 }

@@ -6,6 +6,7 @@ import {
 import withListLoading from '../../Loading/withListLoading';
 import ParentCard from '../Card';
 import { DataContext } from '../../Context';
+import sentryLogger from '../../../Functions/Logger';
 
 const ParentsBase = ({ parents }) => (
   <CardColumns>
@@ -30,17 +31,11 @@ const ParentsPage = () => {
         const response = await fetch(
           `${process.env.REACT_APP_API_URL}/dogs`,
         );
-        const { ok } = response;
-        if (ok) {
-          const result = await response.json();
-          updateNode('parents', result.data);
-        } else {
-          throw new Error('');
-        }
-      } catch {
-        setReadError(
-          new Error('There was an error loading the data'),
-        );
+        const result = await response.json();
+        updateNode('parents', result.data);
+      } catch (e) {
+        sentryLogger(e);
+        setReadError(new Error('Failed to fetch.'));
       }
     }
     if (!data.parents) {

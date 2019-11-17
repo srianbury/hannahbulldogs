@@ -1,19 +1,26 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import withListLoading from '../Loading/withListLoading';
 import LitterCard from './desc';
 import { DataContext } from '../Context';
+import sentryLogger from '../../Functions/Logger';
 
 const LitterPageLogic = () => {
   const { data, updateNode } = useContext(DataContext);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function read() {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/litters`,
-      );
-      const result = await response.json();
-      updateNode('puppies', result.data);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/litters`,
+        );
+        const result = await response.json();
+        updateNode('puppies', result.data);
+      } catch (e) {
+        sentryLogger(e);
+        setError(new Error('Failed to fetch.'));
+      }
     }
 
     if (!data.puppies) {
@@ -22,6 +29,7 @@ const LitterPageLogic = () => {
   }, [data.puppies, updateNode]);
   return (
     <LitterPageWithListLoading
+      error={error}
       loading={data.puppies}
       litters={data.puppies}
     />

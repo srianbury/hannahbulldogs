@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { SignUpLink } from '../../SignUp';
 import { ROUTES, STORAGE } from '../../../Constants';
+import sentryLogger from '../../../Functions/Logger';
 import './styles.css';
 
 const LoginPage = () => (
@@ -55,6 +56,7 @@ const Login = () => {
         }
       }
     } catch (e) {
+      sentryLogger(e);
       setLoading(false);
       setError(e);
     }
