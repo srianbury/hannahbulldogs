@@ -6,6 +6,9 @@ cache:
   - node_modules
 script:
   - npm run build
+env:
+  REACT_APP_SENTRY_URL: $REACT_APP_SENTRY_URL
+  REACT_APP_API_URL: $REACT_APP_API_URL
 deploy:
   provider: pages
   skip_cleanup: true
