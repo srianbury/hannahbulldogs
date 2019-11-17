@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hannahbulldogs/static/css/main.440a4190.chunk.css",
-    "main.js": "/hannahbulldogs/static/js/main.3f505d14.chunk.js",
-    "main.js.map": "/hannahbulldogs/static/js/main.3f505d14.chunk.js.map",
+    "main.js": "/hannahbulldogs/static/js/main.6af5717f.chunk.js",
+    "main.js.map": "/hannahbulldogs/static/js/main.6af5717f.chunk.js.map",
     "runtime-main.js": "/hannahbulldogs/static/js/runtime-main.cd58ccbc.js",
     "runtime-main.js.map": "/hannahbulldogs/static/js/runtime-main.cd58ccbc.js.map",
     "static/css/2.39017165.chunk.css": "/hannahbulldogs/static/css/2.39017165.chunk.css",
-    "static/js/2.5d75bc29.chunk.js": "/hannahbulldogs/static/js/2.5d75bc29.chunk.js",
-    "static/js/2.5d75bc29.chunk.js.map": "/hannahbulldogs/static/js/2.5d75bc29.chunk.js.map",
+    "static/js/2.78f790e0.chunk.js": "/hannahbulldogs/static/js/2.78f790e0.chunk.js",
+    "static/js/2.78f790e0.chunk.js.map": "/hannahbulldogs/static/js/2.78f790e0.chunk.js.map",
     "index.html": "/hannahbulldogs/index.html",
-    "precache-manifest.dc1583f91a127e4aadfe69aedec85f5a.js": "/hannahbulldogs/precache-manifest.dc1583f91a127e4aadfe69aedec85f5a.js",
+    "precache-manifest.3264d9e2b441eee386c747077424a558.js": "/hannahbulldogs/precache-manifest.3264d9e2b441eee386c747077424a558.js",
     "service-worker.js": "/hannahbulldogs/service-worker.js",
     "static/css/2.39017165.chunk.css.map": "/hannahbulldogs/static/css/2.39017165.chunk.css.map",
     "static/css/main.440a4190.chunk.css.map": "/hannahbulldogs/static/css/main.440a4190.chunk.css.map",
@@ -18,8 +18,8 @@
   "entrypoints": [
     "static/js/runtime-main.cd58ccbc.js",
     "static/css/2.39017165.chunk.css",
-    "static/js/2.5d75bc29.chunk.js",
+    "static/js/2.78f790e0.chunk.js",
     "static/css/main.440a4190.chunk.css",
-    "static/js/main.3f505d14.chunk.js"
+    "static/js/main.6af5717f.chunk.js"
   ]
 }
