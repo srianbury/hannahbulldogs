@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { Card, Carousel } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { ROUTES } from "../../../Constants";
-import { AuthUserContext } from "../../Authentication";
-import withAuthorizationHOC from "../../Authorization";
+import React, { useContext } from 'react';
+import { Card, Carousel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../../Constants';
+import { AuthUserContext } from '../../Authentication';
+import withAuthorizationHOC from '../../Authorization';
 
 const Edit = ({ data }) => (
   <Link
     to={{
-      pathname: `${ROUTES.PARENTS_EDIT}/${data._id}}`,
-      state: { ...data }
+      pathname: `${ROUTES.PARENTS_EDIT}/${data._id}`,
+      state: { ...data },
     }}
   >
     Edit
@@ -25,7 +25,11 @@ const DogCard = props => {
       <Carousel>
         {images.map(image => (
           <Carousel.Item key={image._id}>
-            <img className="img img-fluid" src={image.url} alt={image.alt} />
+            <img
+              className="img img-fluid"
+              src={image.url}
+              alt={image.alt}
+            />
           </Carousel.Item>
         ))}
       </Carousel>
@@ -47,7 +51,7 @@ const DogCard = props => {
 };
 
 function getSex(sex) {
-  return sex ? "Female" : "Male";
+  return sex ? 'Female' : 'Male';
 }
 
 export default DogCard;
