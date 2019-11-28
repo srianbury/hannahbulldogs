@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Card, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../../Constants';
-import { AuthUserContext } from '../../Authentication';
 import withAuthorizationHOC from '../../Authorization';
 
 const Edit = ({ data }) => (
@@ -18,7 +17,6 @@ const Edit = ({ data }) => (
 const EditWithAuthorization = withAuthorizationHOC(Edit);
 
 const DogCard = props => {
-  const { authUser } = useContext(AuthUserContext);
   const { name, sex, breed, images, editAccess } = props;
   return (
     <Card>
@@ -41,7 +39,6 @@ const DogCard = props => {
         <Card.Text>{breed}</Card.Text>
         <EditWithAuthorization
           data={props}
-          authUser={authUser}
           accessLevels={editAccess}
           Fallback={null}
         />

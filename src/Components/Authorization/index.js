@@ -1,11 +1,21 @@
-import React from 'react';
-
-// Fallback
-// if nothing is pass a default component will return
-// if null is passed null will return
-// if a fallback is given it will return that
-const withAuthorizationHOC = Component => props => {
-  const { authUser, accessLevels, Fallback, ...rest } = props;
+import React, { useContext } from 'react';
+import { AuthUserContext } from '../Authentication';
+/**
+ * Renders a component if the correct auth permissions are met.
+ * Otherwise render a fallback.
+ * @param {Object} {
+ *   accessLevels, (array of strings)
+ *   Fallback, fallback component | null
+ *   ...rest
+ * }
+ * @returns Component
+ */
+const withAuthorizationHOC = Component => ({
+  accessLevels,
+  Fallback,
+  ...rest
+}) => {
+  const { authUser } = useContext(AuthUserContext);
 
   if (withAuthorization(authUser, accessLevels)) {
     return <Component {...rest} />;
