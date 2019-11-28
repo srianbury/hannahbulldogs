@@ -13,11 +13,23 @@ const DataContextWrapper = ({ children }) => {
     setData({ ...data, [key]: results });
   }
 
+  function updateParents(updatedData) {
+    const currentParentList = data.parents;
+    const listWithUpdatedData = currentParentList.map(parent => {
+      if (parent._id === updatedData._id) {
+        return { ...parent, ...updatedData };
+      }
+      return parent;
+    });
+    updateNode('parents', listWithUpdatedData);
+  }
+
   return (
     <DataContext.Provider
       value={{
         data,
         updateNode,
+        updateParents,
       }}
     >
       {children}
