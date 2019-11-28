@@ -24,26 +24,38 @@ import withDataContext from '../Context';
 import './styles.css';
 
 const AppContainer = () => (
-  <Router basename="/">
+  <Router basename="/" className="main">
     <App FallbackError={EntireAppCatcher} />
   </Router>
+);
+
+const withPage = Component => props => (
+  <div className="height-100-min">
+    <Component {...props} />
+  </div>
 );
 
 const AppBase = () => (
   <>
     <Nav />
     <Switch>
-      <Route exact path={ROUTES.HOME} component={Home} />
+      <Route exact path={ROUTES.HOME} component={withPage(Home)} />
       <Route
         path={`${ROUTES.PARENTS_EDIT}/:id`}
         component={EditParentPage}
       />
-      <Route path={ROUTES.PARENTS} component={ParentsPage} />
-      <Route path={ROUTES.PUPPIES} component={LitterPage} />
-      <Route path={ROUTES.GALLERY} component={Gallery} />
-      <Route path={ROUTES.LOGIN} component={Login} />
-      <Route path={ROUTES.SIGN_UP} component={SignUp} />
-      <Route path={ROUTES.USER_PROFILE} component={UserProfilePage} />
+      <Route
+        path={ROUTES.PARENTS}
+        component={withPage(ParentsPage)}
+      />
+      <Route path={ROUTES.PUPPIES} component={withPage(LitterPage)} />
+      <Route path={ROUTES.GALLERY} component={withPage(Gallery)} />
+      <Route path={ROUTES.LOGIN} component={withPage(Login)} />
+      <Route path={ROUTES.SIGN_UP} component={withPage(SignUp)} />
+      <Route
+        path={ROUTES.USER_PROFILE}
+        component={withPage(UserProfilePage)}
+      />
       <Route component={NoMatch} />
     </Switch>
     <Notifications />
