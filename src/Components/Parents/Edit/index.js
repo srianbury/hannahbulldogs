@@ -6,6 +6,7 @@ import {
   Col,
   Row,
   Card,
+  Spinner,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import withAuthorizationHOC from '../../Authorization';
@@ -28,7 +29,7 @@ const EditParentBase = props => {
   const validationSchema = yup.object({
     name: yup.string().required('Name is required.'),
   });
-  async function onSubmit(values) {
+  async function onSubmit(values, { setSubmitting }) {
     try {
       const diff = difference(values, state);
       if (!_.isEmpty(diff)) {
@@ -62,6 +63,8 @@ const EditParentBase = props => {
         makeToast.TYPES.ERROR,
       );
       sentryLogger(error);
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -164,8 +167,23 @@ const EditParentBase = props => {
             <EditImage src={addImage} alt="addImage" />
           </Col>
         </Row>
-        <Button type="submit" size="sm" variant="primary">
-          Update
+        <Button
+          type="submit"
+          size="sm"
+          variant="primary"
+          disabled={formik.isSubmitting}
+        >
+          {formik.isSubmitting ? (
+            <Spinner
+              as="span"
+              animation="grow"
+              role="status"
+              size="sm"
+              aria-hidden="true"
+            />
+          ) : (
+            'Update'
+          )}
         </Button>
       </Form>
     </>
