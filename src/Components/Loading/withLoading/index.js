@@ -17,6 +17,7 @@ const withLoading = Component => props => {
     EmptyFallback,
     ...rest
   } = props;
+
   if (error) {
     return (
       <>
@@ -29,7 +30,7 @@ const withLoading = Component => props => {
     );
   }
 
-  if (loading === null) {
+  if (loading === null || loading === undefined) {
     return (
       <>
         {LoadingFallback ? <LoadingFallback /> : <DefaultLoading />}

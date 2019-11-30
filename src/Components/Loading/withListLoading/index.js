@@ -30,7 +30,7 @@ const withListLoading = Component => props => {
     );
   }
 
-  if (loading === null) {
+  if (loading === null || loading === undefined) {
     return (
       <>
         {LoadingFallback ? <LoadingFallback /> : <DefaultLoading />}
