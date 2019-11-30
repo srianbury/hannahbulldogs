@@ -29,11 +29,7 @@ const AppContainer = () => (
   </Router>
 );
 
-const withPage = Component => props => (
-  <div className="height-100-min">
-    <Component {...props} />
-  </div>
-);
+const withPage = Component => props => <Component {...props} />;
 
 const AppBase = () => (
   <>
@@ -59,7 +55,6 @@ const AppBase = () => (
       <Route component={NoMatch} />
     </Switch>
     <Notifications />
-    <BottomNav />
   </>
 );
 
