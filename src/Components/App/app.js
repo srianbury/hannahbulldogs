@@ -29,7 +29,7 @@ const AppContainer = () => (
 );
 
 const AppBase = () => (
-  <>
+  <div className="mb-2">
     <Nav />
     <Switch>
       <Route exact path={ROUTES.HOME} component={Home} />
@@ -46,7 +46,7 @@ const AppBase = () => (
       <Route component={NoMatch} />
     </Switch>
     <Notifications />
-  </>
+  </div>
 );
 
 const App = withErrorBoundary(
