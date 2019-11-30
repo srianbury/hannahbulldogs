@@ -5,14 +5,7 @@ import { ROUTES } from '../../../Constants';
 import withAuthorizationHOC from '../../Authorization';
 
 const Edit = ({ data }) => (
-  <Link
-    to={{
-      pathname: `${ROUTES.PARENTS_EDIT}/${data._id}`,
-      state: { ...data },
-    }}
-  >
-    Edit
-  </Link>
+  <Link to={`${ROUTES.PARENTS_EDIT}/${data._id}`}>Edit</Link>
 );
 const EditWithAuthorization = withAuthorizationHOC(Edit);
 
