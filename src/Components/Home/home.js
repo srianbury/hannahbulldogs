@@ -5,6 +5,7 @@ import { GalleryPreview } from '../Gallery';
 import withLoading from '../Loading/withLoading';
 import { DataContext } from '../Context';
 import sentryLogger from '../../Functions/Logger';
+import CenterSpinner from '../Loading/Center';
 
 const Home = () => {
   const { data, updateNode } = useContext(DataContext);
@@ -33,6 +34,7 @@ const Home = () => {
     <>
       <Header />
       <InfoWithLoading
+        LoadingFallback={CenterSpinner}
         error={error}
         loading={data.home}
         data={data.home}

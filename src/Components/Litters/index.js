@@ -4,6 +4,7 @@ import withListLoading from '../Loading/withListLoading';
 import LitterCard from './desc';
 import { DataContext } from '../Context';
 import sentryLogger from '../../Functions/Logger';
+import CenterSpinner from '../Loading/Center';
 
 const LitterPageLogic = () => {
   const { data, updateNode } = useContext(DataContext);
@@ -29,6 +30,7 @@ const LitterPageLogic = () => {
   }, [data.puppies, updateNode]);
   return (
     <LitterPageWithListLoading
+      LoadingFallback={CenterSpinner}
       error={error}
       loading={data.puppies}
       litters={data.puppies}

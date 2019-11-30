@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import withListLoading from '../../Loading/withListLoading';
 import { DataContext } from '../../Context';
 import sentryLogger from '../../../Functions/Logger';
+import CenterSpinner from '../../Loading/Center';
 
 const GalleryPage = () => {
   const { data, updateNode } = useContext(DataContext);
@@ -26,37 +27,36 @@ const GalleryPage = () => {
     }
   }, [data.gallery, updateNode]);
   return (
-    <Container>
-      <Row>
-        <GalleryWithListLoading
-          error={error}
-          loading={data.gallery}
-          images={data.gallery}
-        />
-      </Row>
-    </Container>
+    <GalleryWithListLoading
+      LoadingFallback={CenterSpinner}
+      error={error}
+      loading={data.gallery}
+      images={data.gallery}
+    />
   );
 };
 
 const Gallery = ({ images }) => (
-  <>
-    {images.map(image => (
-      <Col sm={6} key={image._id}>
-        <InstagramEmbed
-          url={image.url}
-          maxWidth={200}
-          hideCaption={false}
-          containerTagName="div"
-          protocol=""
-          injectScript
-          onLoading={() => {}}
-          onSuccess={() => {}}
-          onAfterRender={() => {}}
-          onFailure={() => {}}
-        />
-      </Col>
-    ))}
-  </>
+  <Container>
+    <Row>
+      {images.map(image => (
+        <Col sm={6} key={image._id}>
+          <InstagramEmbed
+            url={image.url}
+            maxWidth={200}
+            hideCaption={false}
+            containerTagName="div"
+            protocol=""
+            injectScript
+            onLoading={() => {}}
+            onSuccess={() => {}}
+            onAfterRender={() => {}}
+            onFailure={() => {}}
+          />
+        </Col>
+      ))}
+    </Row>
+  </Container>
 );
 const GalleryWithListLoading = withListLoading(Gallery);
 

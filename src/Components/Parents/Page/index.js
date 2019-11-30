@@ -7,6 +7,7 @@ import withListLoading from '../../Loading/withListLoading';
 import ParentCard from '../Card';
 import { DataContext } from '../../Context';
 import sentryLogger from '../../../Functions/Logger';
+import CenterSpinner from '../../Loading/Center';
 
 const ParentsBase = ({ parents }) => (
   <CardColumns>
@@ -45,6 +46,7 @@ const ParentsPage = () => {
   return (
     <Container>
       <ParentsWithLoading
+        LoadingFallback={CenterSpinner}
         loading={data.parents}
         parents={data.parents}
         error={readError}
