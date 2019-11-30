@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import DataContext from './context';
+import { DATA } from '../../Constants';
 
 const DataContextWrapper = ({ children }) => {
-  const [data, setData] = useState({
-    home: null,
-    parents: null,
-    puppies: null,
-    gallery: null,
-  });
+  const [data, setData] = useState({});
 
   function updateNode(key, results) {
     setData({ ...data, [key]: results });
@@ -21,7 +17,7 @@ const DataContextWrapper = ({ children }) => {
       }
       return parent;
     });
-    updateNode('parents', listWithUpdatedData);
+    updateNode(DATA.PARENTS, listWithUpdatedData);
   }
 
   return (
