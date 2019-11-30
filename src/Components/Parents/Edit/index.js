@@ -75,7 +75,7 @@ const EditParentBase = props => {
   });
 
   return (
-    <>
+    <Container>
       <h5>Edit</h5>
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group controlId="formBasicEmail">
@@ -186,22 +186,16 @@ const EditParentBase = props => {
           )}
         </Button>
       </Form>
-    </>
+    </Container>
   );
 };
 const EditWithAuthorization = withAuthorizationHOC(EditParentBase);
 const editAccess = [ACCESS.ADMIN, ACCESS.MINDFLAYER];
 
 const EditParentPage = props => {
-  const { authUser } = useContext(AuthUserContext);
+  console.log(props.match.params.id);
   return (
-    <Container>
-      <EditWithAuthorization
-        authUser={authUser}
-        accessLevels={editAccess}
-        {...props}
-      />
-    </Container>
+    <EditWithAuthorization accessLevels={editAccess} {...props} />
   );
 };
 
