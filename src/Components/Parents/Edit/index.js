@@ -18,6 +18,8 @@ import * as yup from 'yup';
 import difference from '../../../Functions/Diff';
 import { DataContext } from '../../Context';
 import sentryLogger from '../../../Functions/Logger';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const EditParentBase = ({ data }) => {
   const { authUser } = useContext(AuthUserContext);
@@ -92,19 +94,23 @@ const EditParentBase = ({ data }) => {
         </Form.Group>
         <Form.Group controlId="birthday">
           <Form.Label>Birthday</Form.Label>
-          <Form.Control
-            type="date"
-            name="birthday"
-            value={formik.values.birthday}
-            onChange={e => console.log(e.target.value)}
-          />
+          <div>
+            <DatePicker
+              className="form-control"
+              selected={new Date(formik.values.birthday)}
+              onChange={date =>
+                formik.handleChange({
+                  target: { name: 'birthday', value: date },
+                })
+              }
+            />
+          </div>
           {formik.touched.birthday && formik.errors.birthday && (
             <div className="text-danger">
               {formik.errors.birthday}
             </div>
           )}
         </Form.Group>
-        <div>{formik.values.birthday}</div>
         <Form.Group controlId="breedcontrol">
           <Form.Label>Breed</Form.Label>
           <Form.Control
