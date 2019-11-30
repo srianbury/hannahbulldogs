@@ -8,6 +8,7 @@ import ParentCard from '../Card';
 import { DataContext } from '../../Context';
 import sentryLogger from '../../../Functions/Logger';
 import CenterSpinner from '../../Loading/Center';
+import { DATA } from '../../../Constants';
 
 const ParentsBase = ({ parents }) => (
   <CardColumns>
@@ -33,7 +34,7 @@ const ParentsPage = () => {
           `${process.env.REACT_APP_API_URL}/dogs`,
         );
         const result = await response.json();
-        updateNode('parents', result.data);
+        updateNode(DATA.PARENTS, result.data);
       } catch (e) {
         sentryLogger(e);
         setReadError(new Error('Failed to fetch.'));

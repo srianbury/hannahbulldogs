@@ -6,6 +6,7 @@ import withLoading from '../Loading/withLoading';
 import { DataContext } from '../Context';
 import sentryLogger from '../../Functions/Logger';
 import CenterSpinner from '../Loading/Center';
+import { DATA } from '../../Constants';
 
 const Home = () => {
   const { data, updateNode } = useContext(DataContext);
@@ -18,7 +19,7 @@ const Home = () => {
           `${process.env.REACT_APP_API_URL}/home`,
         );
         const result = await response.json();
-        updateNode('home', result.data);
+        updateNode(DATA.HOME, result.data);
       } catch (e) {
         sentryLogger(e);
         setError(new Error('Failed to fetch.'));

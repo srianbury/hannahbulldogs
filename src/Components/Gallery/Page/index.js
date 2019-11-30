@@ -5,6 +5,7 @@ import withListLoading from '../../Loading/withListLoading';
 import { DataContext } from '../../Context';
 import sentryLogger from '../../../Functions/Logger';
 import CenterSpinner from '../../Loading/Center';
+import { DATA } from '../../../Constants';
 
 const GalleryPage = () => {
   const { data, updateNode } = useContext(DataContext);
@@ -16,7 +17,7 @@ const GalleryPage = () => {
           `${process.env.REACT_APP_API_URL}/gallery`,
         );
         const result = await response.json();
-        updateNode('gallery', result.data);
+        updateNode(DATA.GALLERY, result.data);
       } catch (e) {
         sentryLogger(e);
         setError(new Error('Failed to fetch.'));

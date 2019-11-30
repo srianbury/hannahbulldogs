@@ -5,6 +5,7 @@ import LitterCard from './desc';
 import { DataContext } from '../Context';
 import sentryLogger from '../../Functions/Logger';
 import CenterSpinner from '../Loading/Center';
+import { DATA } from '../../Constants';
 
 const LitterPageLogic = () => {
   const { data, updateNode } = useContext(DataContext);
@@ -17,7 +18,7 @@ const LitterPageLogic = () => {
           `${process.env.REACT_APP_API_URL}/litters`,
         );
         const result = await response.json();
-        updateNode('puppies', result.data);
+        updateNode(DATA.PUPPIES, result.data);
       } catch (e) {
         sentryLogger(e);
         setError(new Error('Failed to fetch.'));
