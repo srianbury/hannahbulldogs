@@ -11,7 +11,6 @@ import withErrorBoundary from '../Error/Boundary';
 import Home from '../Home';
 import EntireAppCatcher from '../Error/Entire';
 import NoMatch from '../404';
-import BottomNav from '../BottomNav';
 import SignUp from '../SignUp';
 import ParentsPage from '../Parents/Page';
 import UserProfilePage from '../User';
