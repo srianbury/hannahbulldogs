@@ -13,9 +13,7 @@ const ParentsBase = ({ parents }) => (
       {parents
         .sort((a, b) => a.birthday.localeCompare(b.birthday))
         .map(parent => (
-          // <Col md={4} sm={6}>
           <ParentCard key={parent._id} {...parent} />
-          // </Col>
         ))}
     </CardColumns>
   </Container>
