@@ -20,12 +20,21 @@ const DataContextWrapper = ({ children }) => {
     updateNode(DATA.PARENTS, listWithUpdatedData);
   }
 
+  function getParent(id) {
+    const currentParentList = data.parents;
+    const parentAtId = currentParentList.find(
+      parent => parent._id === id,
+    );
+    return parentAtId;
+  }
+
   return (
     <DataContext.Provider
       value={{
         data,
         updateNode,
         updateParents,
+        getParent,
       }}
     >
       {children}
