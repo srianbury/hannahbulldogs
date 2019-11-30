@@ -39,7 +39,7 @@ const DogCard = props => {
         <Card.Text>{breed}</Card.Text>
         <EditWithAuthorization
           data={props}
-          accessLevels={editAccess}
+          editAccess={editAccess}
           Fallback={null}
         />
       </Card.Body>

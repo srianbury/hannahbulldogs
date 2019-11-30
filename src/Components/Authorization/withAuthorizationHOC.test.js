@@ -21,7 +21,7 @@ describe('Testing Edit on Parent Card Authorization', () => {
     const wrapper = mount(
       <MockAuthorization
         authUser={undefined}
-        accessLevels={[]}
+        editAccess={[]}
         Fallback={null}
       />,
     );
@@ -31,7 +31,7 @@ describe('Testing Edit on Parent Card Authorization', () => {
 
   it('should return the default not authorized component', () => {
     const wrapper = mount(
-      <MockAuthorization authUser={null} accessLevels={[]} />,
+      <MockAuthorization authUser={null} editAccess={[]} />,
     );
     expect(wrapper.find(NotAuthorized).length).toEqual(1);
   });
@@ -46,11 +46,11 @@ describe('Testing Edit on Parent Card Authorization', () => {
         __v: 0,
       },
     };
-    const accessLevels = [ACCESS.ADMIN];
+    const editAccess = [ACCESS.ADMIN];
     const wrapper = mount(
       <MockAuthorization
         authUser={authUser}
-        accessLevels={accessLevels}
+        editAccess={editAccess}
       />,
     );
     expect(wrapper.find(Base).length).toEqual(1);
@@ -66,11 +66,11 @@ describe('Testing Edit on Parent Card Authorization', () => {
         __v: 0,
       },
     };
-    const accessLevels = [ACCESS.MINDFLAYER];
+    const editAccess = [ACCESS.MINDFLAYER];
     const wrapper = mount(
       <MockAuthorization
         authUser={authUser}
-        accessLevels={accessLevels}
+        editAccess={editAccess}
       />,
     );
     expect(wrapper.find(NotAuthorized).length).toEqual(1);
@@ -86,11 +86,11 @@ describe('Testing Edit on Parent Card Authorization', () => {
         __v: 0,
       },
     };
-    const accessLevels = [ACCESS.MINDFLAYER];
+    const editAccess = [ACCESS.MINDFLAYER];
     const wrapper = mount(
       <MockAuthorization
         authUser={authUser}
-        accessLevels={accessLevels}
+        editAccess={editAccess}
         Fallback={null}
       />,
     );
