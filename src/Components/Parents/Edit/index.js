@@ -10,7 +10,6 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import withAuthorizationHOC from '../../Authorization';
-import { ACCESS } from '../../../Constants';
 import { AuthUserContext } from '../../Authentication';
 import { makeToast } from '../../Notifications';
 import addImage from '../../../Assets/images/add_image.webp';
@@ -20,18 +19,17 @@ import difference from '../../../Functions/Diff';
 import { DataContext } from '../../Context';
 import sentryLogger from '../../../Functions/Logger';
 
-const EditParentBase = props => {
+const EditParentBase = ({ data }) => {
   const { authUser } = useContext(AuthUserContext);
   const { updateParents } = useContext(DataContext);
-  const { state } = props.location;
-  const { _id } = state;
-  const initialValues = state;
+  const { _id } = data;
+  const initialValues = data;
   const validationSchema = yup.object({
     name: yup.string().required('Name is required.'),
   });
   async function onSubmit(values, { setSubmitting }) {
     try {
-      const diff = difference(values, state);
+      const diff = difference(values, data);
       if (!_.isEmpty(diff)) {
         const response = await fetch(
           `${process.env.REACT_APP_API_URL}/dogs/${_id}`,
@@ -56,6 +54,8 @@ const EditParentBase = props => {
               : 'An unexpected error occurred...';
           makeToast(message, makeToast.TYPES.ERROR);
         }
+      } else {
+        makeToast('No changes detected.', makeToast.TYPES.INFO);
       }
     } catch (error) {
       makeToast(
@@ -67,7 +67,6 @@ const EditParentBase = props => {
       setSubmitting(false);
     }
   }
-
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -190,12 +189,13 @@ const EditParentBase = props => {
   );
 };
 const EditWithAuthorization = withAuthorizationHOC(EditParentBase);
-const editAccess = [ACCESS.ADMIN, ACCESS.MINDFLAYER];
 
 const EditParentPage = props => {
-  console.log(props.match.params.id);
+  const { getParent } = useContext(DataContext);
+  const { id } = props.match.params;
+  const data = getParent(id);
   return (
-    <EditWithAuthorization accessLevels={editAccess} {...props} />
+    <EditWithAuthorization editAccess={data.editAccess} data={data} />
   );
 };
 
