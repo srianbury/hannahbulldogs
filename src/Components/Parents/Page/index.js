@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {
-  Container,
-  /* Row, Col, */ CardColumns,
-} from 'react-bootstrap';
+import { Container, CardColumns } from 'react-bootstrap';
 import withListLoading from '../../Loading/withListLoading';
 import ParentCard from '../Card';
 import { DataContext } from '../../Context';
@@ -11,15 +8,17 @@ import CenterSpinner from '../../Loading/Center';
 import { DATA } from '../../../Constants';
 
 const ParentsBase = ({ parents }) => (
-  <CardColumns>
-    {parents
-      .sort((a, b) => a.birthday.localeCompare(b.birthday))
-      .map(parent => (
-        // <Col md={4} sm={6}>
-        <ParentCard key={parent._id} {...parent} />
-        // </Col>
-      ))}
-  </CardColumns>
+  <Container>
+    <CardColumns>
+      {parents
+        .sort((a, b) => a.birthday.localeCompare(b.birthday))
+        .map(parent => (
+          // <Col md={4} sm={6}>
+          <ParentCard key={parent._id} {...parent} />
+          // </Col>
+        ))}
+    </CardColumns>
+  </Container>
 );
 
 const ParentsWithLoading = withListLoading(ParentsBase);
@@ -45,14 +44,12 @@ const ParentsPage = () => {
     }
   }, [data.parents, updateNode]);
   return (
-    <Container>
-      <ParentsWithLoading
-        LoadingFallback={CenterSpinner}
-        loading={data.parents}
-        parents={data.parents}
-        error={readError}
-      />
-    </Container>
+    <ParentsWithLoading
+      LoadingFallback={CenterSpinner}
+      loading={data.parents}
+      parents={data.parents}
+      error={readError}
+    />
   );
 };
 
