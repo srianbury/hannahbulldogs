@@ -3,6 +3,7 @@ import { Card, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../../Constants';
 import withAuthorizationHOC from '../../Authorization';
+import formateDate from '../../../Functions/Format/Date';
 
 const Edit = ({ data }) => (
   <Link to={`${ROUTES.PARENTS_EDIT}/${data._id}`}>Edit</Link>
@@ -10,7 +11,7 @@ const Edit = ({ data }) => (
 const EditWithAuthorization = withAuthorizationHOC(Edit);
 
 const DogCard = props => {
-  const { name, sex, breed, images, editAccess } = props;
+  const { name, sex, breed, birthday, images, editAccess } = props;
   return (
     <Card>
       <Carousel>
@@ -26,7 +27,10 @@ const DogCard = props => {
       </Carousel>
       <Card.Body>
         <Card.Title className="d-flex justify-content-between">
-          <div>{name}</div>
+          <div>
+            <div>{name}</div>
+            <div>Born: {formateDate(birthday)}</div>
+          </div>
           <div>{getSex(sex)}</div>
         </Card.Title>
         <Card.Text>{breed}</Card.Text>
