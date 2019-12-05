@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Container,
   Form,
@@ -12,7 +12,6 @@ import { useFormik } from 'formik';
 import withAuthorizationHOC from '../../Authorization';
 import { AuthUserContext } from '../../Authentication';
 import { makeToast } from '../../Notifications';
-import addImage from '../../../Assets/images/add_image.webp';
 import _ from 'lodash';
 import * as yup from 'yup';
 import difference from '../../../Functions/Diff';
@@ -22,6 +21,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const EditParentBase = ({ data }) => {
+  const [uploadingImage, setUploadingImage] = useState(false);
   const { authUser } = useContext(AuthUserContext);
   const { updateParents } = useContext(DataContext);
   const { _id } = data;
@@ -31,7 +31,7 @@ const EditParentBase = ({ data }) => {
   });
   async function onSubmit(values, { setSubmitting }) {
     try {
-      const diff = difference(values, data);
+      const diff = diffPost(data, values);
       if (!_.isEmpty(diff)) {
         const response = await fetch(
           `${process.env.REACT_APP_API_URL}/dogs/${_id}`,
@@ -74,6 +74,38 @@ const EditParentBase = ({ data }) => {
     onSubmit,
     validationSchema,
   });
+  async function uploadImage(e) {
+    try {
+      setUploadingImage(true);
+      const file = e.target.files[0];
+      const formBody = new FormData();
+      formBody.append('images', file);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/images`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${authUser.token}`,
+          },
+          body: formBody,
+        },
+      );
+      const result = await response.json();
+      const newImage = result.result[0].url;
+      formik.setFieldValue('images', [
+        ...formik.values.images,
+        { url: newImage },
+      ]);
+    } catch (e) {
+      makeToast(
+        'There was an error uploading your image.',
+        makeToast.TYPES.ERROR,
+      );
+      sentryLogger(e);
+    } finally {
+      setUploadingImage(false);
+    }
+  }
 
   return (
     <Container>
@@ -162,15 +194,34 @@ const EditParentBase = ({ data }) => {
             rows="2"
           />
         </Form.Group>
+        <div>
+          {uploadingImage ? (
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          ) : (
+            <input
+              type="file"
+              name="images"
+              accept="image/png, image/jpeg"
+              value={''}
+              onChange={uploadImage}
+            />
+          )}
+        </div>
         <Row className="mb-1 mt-1">
           {formik.values.images.map(image => (
-            <Col xs={6} key={image._id}>
+            <Col
+              xs={6}
+              sm={6}
+              md={4}
+              lg={3}
+              key={image.url}
+              className="mb-1 mt-1"
+            >
               <EditImage src={image.url} alt="doggy" />
             </Col>
           ))}
-          <Col>
-            <EditImage src={addImage} alt="addImage" />
-          </Col>
         </Row>
         <Button
           type="submit"
@@ -219,5 +270,16 @@ const EditImage = ({ src, alt }) => (
     <Card.Img variant="bottom" src={src} alt={alt} />
   </Card>
 );
+
+function diffPost(cur, next) {
+  const updatedFields = difference(cur, next);
+
+  // if the images array has updated send the entire list
+  if ('images' in updatedFields) {
+    updatedFields.images = next.images;
+  }
+
+  return updatedFields;
+}
 
 export default EditParentPage;
