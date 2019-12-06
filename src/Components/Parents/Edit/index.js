@@ -107,6 +107,13 @@ const EditParentBase = ({ data }) => {
     }
   }
 
+  function removeImage(url) {
+    const updatedImages = formik.values.images.filter(
+      image => image.url !== url,
+    );
+    formik.setFieldValue('images', updatedImages);
+  }
+
   return (
     <Container>
       <h5>Edit</h5>
@@ -219,7 +226,11 @@ const EditParentBase = ({ data }) => {
               key={image.url}
               className="mb-1 mt-1"
             >
-              <EditImage src={image.url} alt="doggy" />
+              <EditImage
+                src={image.url}
+                alt="parent bullog"
+                handleRemove={removeImage}
+              />
             </Col>
           ))}
         </Row>
@@ -256,11 +267,11 @@ const EditParentPage = props => {
   );
 };
 
-const EditImage = ({ src, alt }) => (
+const EditImage = ({ src, alt, handleRemove }) => (
   <Card>
     <Card.Header className="text-right">
       <Button
-        onClick={() => console.log('todo')}
+        onClick={() => handleRemove(src)}
         variant="link"
         className="p-0 text-danger"
       >
