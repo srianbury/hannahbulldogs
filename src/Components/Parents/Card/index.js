@@ -14,7 +14,7 @@ const DogCard = props => {
   const { name, sex, breed, birthday, images, editAccess } = props;
   return (
     <Card>
-      <Carousel>
+      <Carousel interval={null}>
         {images.map(image => (
           <Carousel.Item key={image._id}>
             <img
