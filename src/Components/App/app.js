@@ -20,6 +20,7 @@ import Notifications from '../Notifications';
 import Gallery from '../Gallery';
 import LitterPage from '../Litters';
 import withDataContext from '../Context';
+import EditLitterPage from '../Litters/Edit';
 import './styles.css';
 
 const AppContainer = () => (
@@ -38,6 +39,10 @@ const AppBase = () => (
         component={EditParentPage}
       />
       <Route path={ROUTES.PARENTS} component={ParentsPage} />
+      <Route
+        path={`${ROUTES.PUPPIES_EDIT}/:id`}
+        component={EditLitterPage}
+      />
       <Route path={ROUTES.PUPPIES} component={LitterPage} />
       <Route path={ROUTES.GALLERY} component={Gallery} />
       <Route path={ROUTES.LOGIN} component={Login} />
