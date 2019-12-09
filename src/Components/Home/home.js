@@ -4,32 +4,17 @@ import { AboutBrief } from '../About';
 import { GalleryPreview } from '../Gallery';
 import withLoading from '../Loading/withLoading';
 import { DataContext } from '../Context';
-import sentryLogger from '../../Functions/Logger';
 import CenterSpinner from '../Loading/Center';
-import { DATA } from '../../Constants';
 
 const Home = () => {
-  const { data, updateNode } = useContext(DataContext);
+  const { data, readHome } = useContext(DataContext);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function read() {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/home`,
-        );
-        const result = await response.json();
-        updateNode(DATA.HOME, result.data);
-      } catch (e) {
-        sentryLogger(e);
-        setError(new Error('Failed to fetch.'));
-      }
-    }
-
     if (!data.home) {
-      read();
+      readHome(() => setError(new Error('Failed to fetch.')));
     }
-  }, [data, updateNode]);
+  }, [data, readHome]);
 
   return (
     <>
