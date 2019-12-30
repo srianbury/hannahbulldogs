@@ -1,27 +1,22 @@
-import React, { useState, useContext } from 'react';
-import {
-  Container,
-  Form,
-  Button,
-  Col,
-  Row,
-  Card,
-  Spinner,
-} from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Container, Form, Button, Spinner } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import withAuthorizationHOC from '../../Authorization';
 import { AuthUserContext } from '../../Authentication';
 import { makeToast } from '../../Notifications';
 import _ from 'lodash';
 import * as yup from 'yup';
-import difference from '../../../Functions/Diff';
 import { DataContext } from '../../Context';
 import sentryLogger from '../../../Functions/Logger';
 import DatePicker from 'react-datepicker';
+// import UploadImage from '../../Images/Upload';
+// import EditGroup from '../../Images/EditGroup';
+import EditListOfImages from '../../Images/Edit';
+import { diffPost } from '../../../Functions/Crud';
+import { EditImage } from '../../Images/EditImageComponents';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const EditParentBase = ({ data }) => {
-  const [uploadingImage, setUploadingImage] = useState(false);
   const { authUser } = useContext(AuthUserContext);
   const { updateParents } = useContext(DataContext);
   const { _id } = data;
@@ -74,42 +69,15 @@ const EditParentBase = ({ data }) => {
     onSubmit,
     validationSchema,
   });
-  async function uploadImage(e) {
-    try {
-      setUploadingImage(true);
-      const file = e.target.files[0];
-      const formBody = new FormData();
-      formBody.append('images', file);
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/images`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${authUser.token}`,
-          },
-          body: formBody,
-        },
-      );
-      const result = await response.json();
-      const newImage = result.result[0].url;
-      formik.setFieldValue('images', [
-        ...formik.values.images,
-        { url: newImage },
-      ]);
-    } catch (e) {
-      makeToast(
-        'There was an error uploading your image.',
-        makeToast.TYPES.ERROR,
-      );
-      sentryLogger(e);
-    } finally {
-      setUploadingImage(false);
-    }
+  async function handleUpload(newImage) {
+    formik.setFieldValue('images', [
+      ...formik.values.images,
+      { url: newImage },
+    ]);
   }
-
-  function removeImage(url) {
+  function handleRemove(url) {
     const updatedImages = formik.values.images.filter(
-      image => image.url !== url,
+      image => image.url !== url, // using url because if we just uploaded the image it wont have an ID
     );
     formik.setFieldValue('images', updatedImages);
   }
@@ -201,39 +169,14 @@ const EditParentBase = ({ data }) => {
             rows="2"
           />
         </Form.Group>
-        <div>
-          {uploadingImage ? (
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          ) : (
-            <input
-              type="file"
-              name="images"
-              accept="image/png, image/jpeg"
-              value={''}
-              onChange={uploadImage}
-            />
-          )}
-        </div>
-        <Row className="mb-1 mt-1">
-          {formik.values.images.map(image => (
-            <Col
-              xs={6}
-              sm={6}
-              md={4}
-              lg={3}
-              key={image.url}
-              className="mb-1 mt-1"
-            >
-              <EditImage
-                src={image.url}
-                alt="parent bullog"
-                handleRemove={removeImage}
-              />
-            </Col>
-          ))}
-        </Row>
+        <EditListOfImages
+          onUpload={handleUpload}
+          images={formik.values.images}
+          editImage={EditImage}
+          editImageFuncs={{
+            handleRemove,
+          }}
+        />
         <Button
           type="submit"
           size="sm"
@@ -266,31 +209,5 @@ const EditParentPage = props => {
     <EditWithAuthorization editAccess={data.editAccess} data={data} />
   );
 };
-
-const EditImage = ({ src, alt, handleRemove }) => (
-  <Card>
-    <Card.Header className="text-right">
-      <Button
-        onClick={() => handleRemove(src)}
-        variant="link"
-        className="p-0 text-danger"
-      >
-        Delete
-      </Button>
-    </Card.Header>
-    <Card.Img variant="bottom" src={src} alt={alt} />
-  </Card>
-);
-
-function diffPost(cur, next) {
-  const updatedFields = difference(cur, next);
-
-  // if the images array has updated send the entire list
-  if ('images' in updatedFields) {
-    updatedFields.images = next.images;
-  }
-
-  return updatedFields;
-}
 
 export default EditParentPage;
