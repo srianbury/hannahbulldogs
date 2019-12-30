@@ -2,6 +2,7 @@ export const HOME = '/';
 export const PARENTS = '/parents';
 export const PARENTS_EDIT = '/parents/edit';
 export const PUPPIES = '/puppies';
+export const PUPPIES_EDIT = '/puppies/edit';
 export const GALLERY = '/gallery';
 export const LOGIN = '/login';
 export const SIGN_UP = '/signup';
