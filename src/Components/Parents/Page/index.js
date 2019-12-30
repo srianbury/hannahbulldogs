@@ -3,9 +3,7 @@ import { Container, CardColumns } from 'react-bootstrap';
 import withListLoading from '../../Loading/withListLoading';
 import ParentCard from '../Card';
 import { DataContext } from '../../Context';
-import sentryLogger from '../../../Functions/Logger';
 import CenterSpinner from '../../Loading/Center';
-import { DATA } from '../../../Constants';
 
 const ParentsBase = ({ parents }) => (
   <Container>
@@ -21,26 +19,14 @@ const ParentsBase = ({ parents }) => (
 
 const ParentsWithLoading = withListLoading(ParentsBase);
 const ParentsPage = () => {
-  const { data, updateNode } = useContext(DataContext);
+  const { data, readParents } = useContext(DataContext);
   const [readError, setReadError] = useState(null);
 
   useEffect(() => {
-    async function read() {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/dogs`,
-        );
-        const result = await response.json();
-        updateNode(DATA.PARENTS, result.data);
-      } catch (e) {
-        sentryLogger(e);
-        setReadError(new Error('Failed to fetch.'));
-      }
-    }
     if (!data.parents) {
-      read();
+      readParents(() => setReadError(new Error('Failed to fetch')));
     }
-  }, [data.parents, updateNode]);
+  }, [data.parents, readParents]);
   return (
     <ParentsWithLoading
       LoadingFallback={CenterSpinner}
