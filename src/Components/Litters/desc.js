@@ -2,6 +2,9 @@ import React from 'react';
 import { Carousel, Image } from 'react-bootstrap';
 import DescContainer from '../Home/Short';
 import formatDate from '../../Functions/Format/Date';
+import { Link } from 'react-router-dom';
+import withAuthorizationHOC from '../Authorization';
+import { ROUTES } from '../../Constants';
 
 const LitterCarousel = ({ litter }) => (
   <Carousel interval={null} slide={false}>
@@ -19,6 +22,11 @@ const ShortText = ({ litter }) => (
     <h5>Dad: {litter.parents.dad}</h5>
     <h5>Born: {formatDate(litter.birthday)}</h5>
     <div className="mb-1">{litter.description}</div>
+    <EditWithAuthorization
+      editAccess={litter.editAccess}
+      Fallback={null}
+      id={litter._id}
+    />
   </div>
 );
 
@@ -29,5 +37,10 @@ const LitterCard = ({ litter }) => (
     left={<LitterCarousel litter={litter} />}
   />
 );
+
+const Edit = ({ id }) => (
+  <Link to={`${ROUTES.PUPPIES_EDIT}/${id}`}>Edit</Link>
+);
+const EditWithAuthorization = withAuthorizationHOC(Edit);
 
 export default LitterCard;
